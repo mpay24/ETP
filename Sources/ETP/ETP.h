@@ -25,6 +25,7 @@
 @class ETP_PaymentMASTERPASS;
 @class ETP_PaymentPSC;
 @class ETP_PaymentPOSTFINANCE;
+@class ETP_PaymentELVSECURE;
 @class ETP_PaymentIDEAL;
 @class ETP_ProfilePaymentCC;
 @class ETP_ProfilePaymentPB;
@@ -618,6 +619,27 @@ SOAPSigner *soapSigner;
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur;
 /* elements */
 @property (nonatomic, retain) NSString * brand;
+/* attributes */
+- (NSDictionary *)attributes;
+@end
+@interface ETP_PaymentELVSECURE : ETP_Payment {
+/* elements */
+    NSString * brand;
+    NSString * mandateID;
+    NSDate * dateOfSignature;
+/* attributes */
+}
+- (NSString *)nsPrefix;
+- (xmlNodePtr)xmlNodeForDoc:(xmlDocPtr)doc elementName:(NSString *)elName elementNSPrefix:(NSString *)elNSPrefix;
+- (void)addAttributesToNode:(xmlNodePtr)node;
+- (void)addElementsToNode:(xmlNodePtr)node;
++ (ETP_PaymentELV *)deserializeNode:(xmlNodePtr)cur;
+- (void)deserializeAttributesFromNode:(xmlNodePtr)cur;
+- (void)deserializeElementsFromNode:(xmlNodePtr)cur;
+/* elements */
+@property (nonatomic, retain) NSString * brand;
+@property (nonatomic, retain) NSString * mandateID;
+@property (nonatomic, retain) NSDate * dateOfSignature;
 /* attributes */
 - (NSDictionary *)attributes;
 @end
