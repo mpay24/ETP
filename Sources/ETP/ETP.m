@@ -24118,7 +24118,7 @@ parameters:(ETP_AcceptPayment *)aParameters
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
 	
-	//[delegate operation:self sentSOAPRequest: operationXMLString];
+	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"AcceptPayment" forOperation:self];
 }
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
