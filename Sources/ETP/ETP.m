@@ -113,6 +113,9 @@ ETP_PaymentType ETP_PaymentType_enumFromString(NSString *string)
     if([string isEqualToString:@"PREPAYMENT"]) {
         return ETP_PaymentType_PREPAYMENT;
     }
+    if([string isEqualToString:@"TWINT"]) {
+        return ETP_PaymentType_TWINT;
+    }
 	if([string isEqualToString:@"TOKEN"]) {
 		return ETP_PaymentType_TOKEN;
 	}
@@ -202,6 +205,9 @@ NSString * ETP_PaymentType_stringFromEnum(ETP_PaymentType enumValue)
 			break;
         case ETP_PaymentType_PREPAYMENT:
             return @"PREPAYMENT";
+            break;
+        case ETP_PaymentType_TWINT:
+            return @"TWINT";
             break;
 		case ETP_PaymentType_TOKEN:
 			return @"TOKEN";
