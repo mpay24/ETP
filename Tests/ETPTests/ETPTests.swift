@@ -1,4 +1,4 @@
-import Testing
+import XCTest
 import Foundation
 @testable import ETP
 
@@ -6,8 +6,8 @@ let authUser = "u9xxxx"
 let authPassword = "xxxxx"
 let merchantID:UInt32 = 90000
 
-final class ETPTests {
-    @Test func testAcceptPayment() async throws {
+final class ETPTests: XCTestCase {
+    func testAcceptPayment() async throws {
         var service = ETP("https://test.mpay24.com")
         service.authentication = .basic(username: authUser, password: authPassword)
         service.soapRequest = { print("Request:\n\($0)") }
@@ -25,10 +25,18 @@ final class ETPTests {
             pType: .CC,
             payment: payment
         )
-        let response = try await service.AcceptPayment(request)
         
-        #expect(response.status == .OK)
-        #expect(response.returnCode == "OK")
-        #expect(response.mpayTID != nil)
+        do {
+            let response = try await service.AcceptPayment(request)
+            XCTAssertEqual(response.status, .OK, "Expected status to be .OK")
+            XCTAssertEqual(response.returnCode, "OK", "Expected return code to be 'OK'")
+            XCTAssertNotNil(response.mpayTID, "Expected mpayTID to be non-nil")
+        } catch WSDLOperationError.unauhtenticated {
+            if merchantID != 90000 {
+                XCTFail("Expecting authenticated merchant: \(merchantID)")
+            }
+        } catch {
+            XCTFail("Unexpected error thrown: \(error)")
+        }
     }
 }
