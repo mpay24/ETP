@@ -250,7 +250,7 @@ public struct ETP: WSDLService {
     
     /// Common payment data parameters
     public struct PaymentData: Codable, DynamicNodeEncoding, PaymentDataProtocol {
-        public var xsiType: String = "tns:PaymentData"
+        private var xsiType: String = "tns:PaymentData"
         public var validate: Bool?
         public var profileID: String?
 
@@ -277,7 +277,7 @@ public struct ETP: WSDLService {
     
     /// Payment with token specific payment data parameters
     public struct PaymentDataTOKEN: Codable, DynamicNodeEncoding, PaymentDataProtocol {
-        public var xsiType: String = "tns:PaymentDataTOKEN"
+        private var xsiType: String = "tns:PaymentDataTOKEN"
         // properties inherited from PaymentDataProtocol
         public var validate: Bool?
         public var profileID: String?
@@ -312,7 +312,7 @@ public struct ETP: WSDLService {
     
     /// CreditCard specific payment data parameters
     public struct PaymentDataCC: Codable, DynamicNodeEncoding, PaymentDataProtocol {
-        public var xsiType: String = "tns:PaymentDataCC"
+        private var xsiType: String = "tns:PaymentDataCC"
         // properties inherited from PaymentDataProtocol
         public var validate: Bool?
         public var profileID: String?
@@ -356,7 +356,7 @@ public struct ETP: WSDLService {
     
     /// Direct debit specific payment data parameters
     public struct PaymentDataELV: Codable, DynamicNodeEncoding, PaymentDataProtocol {
-        public var xsiType: String = "tns:PaymentDataELV"
+        private var xsiType: String = "tns:PaymentDataELV"
         // properties inherited from PaymentDataProtocol
         public var validate: Bool?
         public var profileID: String?
@@ -410,7 +410,7 @@ public struct ETP: WSDLService {
     
     /// Common payment parameters
     public struct Payment: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:Payment"
+        private var xsiType: String = "tns:Payment"
         public var amount: UInt32
         public var currency: String
         public var timeout: UInt32?
@@ -449,7 +449,7 @@ public struct ETP: WSDLService {
     
     /// Payment with token specific payment parameters
     public struct PaymentTOKEN: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentTOKEN"
+        private var xsiType: String = "tns:PaymentTOKEN"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -493,7 +493,7 @@ public struct ETP: WSDLService {
     
     /// CreditCard specific payment parameters
     public struct PaymentCC: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentCC"
+        private var xsiType: String = "tns:PaymentCC"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -549,7 +549,7 @@ public struct ETP: WSDLService {
     
     /// Carte Bleue specific payment parameters
     public struct PaymentCB: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentCB"
+        private var xsiType: String = "tns:PaymentCB"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -599,7 +599,7 @@ public struct ETP: WSDLService {
     
     /// Maestro specific payment parameters
     public struct PaymentMAESTRO: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentMAESTRO"
+        private var xsiType: String = "tns:PaymentMAESTRO"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -646,7 +646,7 @@ public struct ETP: WSDLService {
     
     /// EPS online bank transfer specific payment parameters
     public struct PaymentEPS: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentEPS"
+        private var xsiType: String = "tns:PaymentEPS"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -696,7 +696,7 @@ public struct ETP: WSDLService {
     
     /// Paybox specific payment parameters
     public struct PaymentPB: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentPB"
+        private var xsiType: String = "tns:PaymentPB"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -746,7 +746,7 @@ public struct ETP: WSDLService {
     
     /// Direct debit specific payment parameters
     public struct PaymentELV: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentELV"
+        private var xsiType: String = "tns:PaymentELV"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -802,7 +802,7 @@ public struct ETP: WSDLService {
     
     /// Giropay online bank transfer specific payment parameters
     public struct PaymentGIROPAY: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentGIROPAY"
+        private var xsiType: String = "tns:PaymentGIROPAY"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -849,7 +849,7 @@ public struct ETP: WSDLService {
     
     /// PayPal specific payment parameters
     public struct PaymentPAYPAL: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentPAYPAL"
+        private var xsiType: String = "tns:PaymentPAYPAL"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -896,7 +896,7 @@ public struct ETP: WSDLService {
     
     /// BillPay specific payment parameters
     public struct PaymentBILLPAY: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentBILLPAY"
+        private var xsiType: String = "tns:PaymentBILLPAY"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -940,7 +940,7 @@ public struct ETP: WSDLService {
     
     /// Klarna specific payment parameters
     public struct PaymentKLARNA: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentKLARNA"
+        private var xsiType: String = "tns:PaymentKLARNA"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -990,7 +990,7 @@ public struct ETP: WSDLService {
     
     /// PaySafecard specific payment parameters
     public struct PaymentPSC: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentPSC"
+        private var xsiType: String = "tns:PaymentPSC"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -1034,7 +1034,7 @@ public struct ETP: WSDLService {
     
     /// PostFinance specific payment parameters
     public struct PaymentPOSTFINANCE: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentPOSTFINANCE"
+        private var xsiType: String = "tns:PaymentPOSTFINANCE"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -1078,7 +1078,7 @@ public struct ETP: WSDLService {
     
     /// Secure direct debit specific payment parameters
     public struct PaymentELVSECURE: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentELVSECURE"
+        private var xsiType: String = "tns:PaymentELVSECURE"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -1128,7 +1128,7 @@ public struct ETP: WSDLService {
     
     /// iDEAL specific payment parameters
     public struct PaymentIDEAL: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:PaymentIDEAL"
+        private var xsiType: String = "tns:PaymentIDEAL"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -1172,7 +1172,7 @@ public struct ETP: WSDLService {
     
     /// CreditCard specific profile payment parameters
     public struct ProfilePaymentCC: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:ProfilePaymentCC"
+        private var xsiType: String = "tns:ProfilePaymentCC"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -1219,7 +1219,7 @@ public struct ETP: WSDLService {
     
     /// Paybox specific profile payment parameters
     public struct ProfilePaymentPB: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:ProfilePaymentPB"
+        private var xsiType: String = "tns:ProfilePaymentPB"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -1266,7 +1266,7 @@ public struct ETP: WSDLService {
     
     /// Direct debit specific profile payment parameters
     public struct ProfilePaymentELV: Codable, DynamicNodeEncoding, PaymentProtocol {
-        public var xsiType: String = "tns:ProfilePaymentELV"
+        private var xsiType: String = "tns:ProfilePaymentELV"
         // properties inherited from PaymentProtocol
         public var amount: UInt32
         public var currency: String
@@ -1319,7 +1319,7 @@ public struct ETP: WSDLService {
     
     /// Common withdraw parameters
     public struct Withdraw: Codable, DynamicNodeEncoding, WithdrawProtocol {
-        public var xsiType: String = "tns:Withdraw"
+        private var xsiType: String = "tns:Withdraw"
         public var amount: UInt32
         public var currency: String
 
@@ -1346,7 +1346,7 @@ public struct ETP: WSDLService {
     
     /// CreditCard specific withdraw parameters
     public struct WithdrawCC: Codable, DynamicNodeEncoding, WithdrawProtocol {
-        public var xsiType: String = "tns:WithdrawCC"
+        private var xsiType: String = "tns:WithdrawCC"
         // properties inherited from WithdrawProtocol
         public var amount: UInt32
         public var currency: String
@@ -1384,7 +1384,7 @@ public struct ETP: WSDLService {
     
     /// Maestro Card specific withdraw parameters
     public struct WithdrawMAESTRO: Codable, DynamicNodeEncoding, WithdrawProtocol {
-        public var xsiType: String = "tns:WithdrawMAESTRO"
+        private var xsiType: String = "tns:WithdrawMAESTRO"
         // properties inherited from WithdrawProtocol
         public var amount: UInt32
         public var currency: String
@@ -1419,7 +1419,7 @@ public struct ETP: WSDLService {
     
     /// Direct debit specific withdraw parameters
     public struct WithdrawELV: Codable, DynamicNodeEncoding, WithdrawProtocol {
-        public var xsiType: String = "tns:WithdrawELV"
+        private var xsiType: String = "tns:WithdrawELV"
         // properties inherited from WithdrawProtocol
         public var amount: UInt32
         public var currency: String
@@ -1513,7 +1513,7 @@ public struct ETP: WSDLService {
     
     /// Common industry specific parameters
     public struct IndustrySpecific: Codable, DynamicNodeEncoding, IndustrySpecificProtocol {
-        public var xsiType: String = "tns:IndustrySpecific"
+        private var xsiType: String = "tns:IndustrySpecific"
 
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
@@ -1533,7 +1533,7 @@ public struct ETP: WSDLService {
     
     /// Industry specific parameters for airline tickets
     public struct AirlineTicket: Codable, DynamicNodeEncoding, IndustrySpecificProtocol {
-        public var xsiType: String = "tns:AirlineTicket"
+        private var xsiType: String = "tns:AirlineTicket"
         public var iataCode: String
         public var ticketID: String
 
@@ -1664,7 +1664,7 @@ public struct ETP: WSDLService {
     
     /// Common payment callback parameters
     public struct Callback: Codable, DynamicNodeEncoding, CallbackProtocol {
-        public var xsiType: String = "tns:Callback"
+        private var xsiType: String = "tns:Callback"
         public var amount: UInt32?
 
         enum CodingKeys: String, CodingKey {
@@ -1688,7 +1688,7 @@ public struct ETP: WSDLService {
     
     /// PayPal specific payment callback parameters
     public struct CallbackPAYPAL: Codable, DynamicNodeEncoding, CallbackProtocol {
-        public var xsiType: String = "tns:CallbackPAYPAL"
+        private var xsiType: String = "tns:CallbackPAYPAL"
         // properties inherited from CallbackProtocol
         public var amount: UInt32?
         // own properties
@@ -1742,7 +1742,7 @@ public struct ETP: WSDLService {
     
     /// Transaction status
     public struct Transaction: Codable, DynamicNodeEncoding, TransactionProtocol {
-        public var xsiType: String = "tns:Transaction"
+        private var xsiType: String = "tns:Transaction"
         public var mpayTID: UInt64
         public var tStatus: TStatus
         public var stateID: UInt64?
@@ -1775,7 +1775,7 @@ public struct ETP: WSDLService {
     
     /// Detailed transaction status
     public struct TransactionDetails: Codable, DynamicNodeEncoding, TransactionProtocol {
-        public var xsiType: String = "tns:TransactionDetails"
+        private var xsiType: String = "tns:TransactionDetails"
         // properties inherited from TransactionProtocol
         public var mpayTID: UInt64
         public var tStatus: TStatus
