@@ -5,7 +5,7 @@ Add the package to your project using Swift Package Managger
 Example usage:
 
 ```
-Import ETP
+import ETP
 
 let authUser = "u9xxxx"
 let authPassword = "xxxxx"
