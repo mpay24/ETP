@@ -253,17 +253,25 @@ public struct ETP: WSDLService {
         public var xsiType: String = "tns:PaymentData"
         public var validate: Bool?
         public var profileID: String?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case validate, profileID
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentData.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            validate: Bool? = nil,
+            profileID: String? = nil
+        )  {
+            self.validate = validate
+            self.profileID = profileID
         }
     }
     
@@ -276,17 +284,29 @@ public struct ETP: WSDLService {
         // own properties
         public var token: String
         public var auth3DS: Bool?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case validate, profileID, token, auth3DS
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentDataTOKEN.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            validate: Bool? = nil,
+            profileID: String? = nil,
+            token: String,
+            auth3DS: Bool? = nil
+        )  {
+            self.validate = validate
+            self.profileID = profileID
+            self.token = token
+            self.auth3DS = auth3DS
         }
     }
     
@@ -302,17 +322,35 @@ public struct ETP: WSDLService {
         public var expiry: UInt32
         public var cvc: String?
         public var auth3DS: Bool?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case validate, profileID, brand, identifier, expiry, cvc, auth3DS
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentDataCC.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            validate: Bool? = nil,
+            profileID: String? = nil,
+            brand: String,
+            identifier: String,
+            expiry: UInt32,
+            cvc: String? = nil,
+            auth3DS: Bool? = nil
+        )  {
+            self.validate = validate
+            self.profileID = profileID
+            self.brand = brand
+            self.identifier = identifier
+            self.expiry = expiry
+            self.cvc = cvc
+            self.auth3DS = auth3DS
         }
     }
     
@@ -328,17 +366,35 @@ public struct ETP: WSDLService {
         public var bic: String?
         public var mandateID: String?
         public var dateOfSignature: Date?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case validate, profileID, brand, iban, bic, mandateID, dateOfSignature
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentDataELV.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            validate: Bool? = nil,
+            profileID: String? = nil,
+            brand: String,
+            iban: String,
+            bic: String? = nil,
+            mandateID: String? = nil,
+            dateOfSignature: Date? = nil
+        )  {
+            self.validate = validate
+            self.profileID = profileID
+            self.brand = brand
+            self.iban = iban
+            self.bic = bic
+            self.mandateID = mandateID
+            self.dateOfSignature = dateOfSignature
         }
     }
     
@@ -361,17 +417,33 @@ public struct ETP: WSDLService {
         public var manualClearing: Bool?
         public var useProfile: Bool?
         public var profileID: String?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case Payment.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
         }
     }
     
@@ -387,17 +459,35 @@ public struct ETP: WSDLService {
         public var profileID: String?
         // own properties
         public var token: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, token
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentTOKEN.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            token: String
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.token = token
         }
     }
     
@@ -417,17 +507,43 @@ public struct ETP: WSDLService {
         public var expiry: UInt32
         public var cvc: String?
         public var auth3DS: Bool?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, brand, identifier, expiry, cvc, auth3DS
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentCC.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            brand: String,
+            identifier: String,
+            expiry: UInt32,
+            cvc: String? = nil,
+            auth3DS: Bool? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.brand = brand
+            self.identifier = identifier
+            self.expiry = expiry
+            self.cvc = cvc
+            self.auth3DS = auth3DS
         }
     }
     
@@ -445,17 +561,39 @@ public struct ETP: WSDLService {
         public var identifier: String
         public var expiry: UInt32
         public var cvc: String?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, identifier, expiry, cvc
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentCB.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            identifier: String,
+            expiry: UInt32,
+            cvc: String? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.identifier = identifier
+            self.expiry = expiry
+            self.cvc = cvc
         }
     }
     
@@ -472,17 +610,37 @@ public struct ETP: WSDLService {
         // own properties
         public var identifier: String
         public var expiry: UInt32
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, identifier, expiry
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentMAESTRO.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            identifier: String,
+            expiry: UInt32
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.identifier = identifier
+            self.expiry = expiry
         }
     }
     
@@ -500,17 +658,39 @@ public struct ETP: WSDLService {
         public var brand: String
         public var bankID: UInt32?
         public var bic: String?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, brand, bankID, bic
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentEPS.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            brand: String,
+            bankID: UInt32? = nil,
+            bic: String? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.brand = brand
+            self.bankID = bankID
+            self.bic = bic
         }
     }
     
@@ -528,17 +708,39 @@ public struct ETP: WSDLService {
         public var identifier: String
         public var payDays: UInt32?
         public var reserveDays: UInt32?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, identifier, payDays, reserveDays
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentPB.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            identifier: String,
+            payDays: UInt32? = nil,
+            reserveDays: UInt32? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.identifier = identifier
+            self.payDays = payDays
+            self.reserveDays = reserveDays
         }
     }
     
@@ -558,17 +760,43 @@ public struct ETP: WSDLService {
         public var bic: String?
         public var mandateID: String?
         public var dateOfSignature: Date?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, brand, iban, bic, mandateID, dateOfSignature
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentELV.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            brand: String,
+            iban: String,
+            bic: String? = nil,
+            mandateID: String? = nil,
+            dateOfSignature: Date? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.brand = brand
+            self.iban = iban
+            self.bic = bic
+            self.mandateID = mandateID
+            self.dateOfSignature = dateOfSignature
         }
     }
     
@@ -585,17 +813,37 @@ public struct ETP: WSDLService {
         // own properties
         public var iban: String?
         public var bic: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, iban, bic
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentGIROPAY.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            iban: String? = nil,
+            bic: String
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.iban = iban
+            self.bic = bic
         }
     }
     
@@ -612,17 +860,37 @@ public struct ETP: WSDLService {
         // own properties
         public var commit: Bool?
         public var custom: String?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, commit, custom
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentPAYPAL.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            commit: Bool? = nil,
+            custom: String? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.commit = commit
+            self.custom = custom
         }
     }
     
@@ -638,17 +906,35 @@ public struct ETP: WSDLService {
         public var profileID: String?
         // own properties
         public var brand: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, brand
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentBILLPAY.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            brand: String
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.brand = brand
         }
     }
     
@@ -666,17 +952,39 @@ public struct ETP: WSDLService {
         public var brand: String
         public var personalNumber: String
         public var pClass: UInt32?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, brand, personalNumber, pClass
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentKLARNA.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            brand: String,
+            personalNumber: String,
+            pClass: UInt32? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.brand = brand
+            self.personalNumber = personalNumber
+            self.pClass = pClass
         }
     }
     
@@ -692,17 +1000,35 @@ public struct ETP: WSDLService {
         public var profileID: String?
         // own properties
         public var brand: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, brand
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentPSC.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            brand: String
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.brand = brand
         }
     }
     
@@ -718,17 +1044,35 @@ public struct ETP: WSDLService {
         public var profileID: String?
         // own properties
         public var brand: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, brand
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentPOSTFINANCE.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            brand: String
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.brand = brand
         }
     }
     
@@ -746,17 +1090,39 @@ public struct ETP: WSDLService {
         public var brand: String
         public var mandateID: String?
         public var dateOfSignature: Date?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, brand, mandateID, dateOfSignature
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentELVSECURE.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            brand: String,
+            mandateID: String? = nil,
+            dateOfSignature: Date? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.brand = brand
+            self.mandateID = mandateID
+            self.dateOfSignature = dateOfSignature
         }
     }
     
@@ -772,17 +1138,35 @@ public struct ETP: WSDLService {
         public var profileID: String?
         // own properties
         public var bank: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, bank
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case PaymentIDEAL.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            bank: String
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.bank = bank
         }
     }
     
@@ -799,17 +1183,37 @@ public struct ETP: WSDLService {
         // own properties
         public var cvc: String?
         public var auth3DS: Bool?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, cvc, auth3DS
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case ProfilePaymentCC.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            cvc: String? = nil,
+            auth3DS: Bool? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.cvc = cvc
+            self.auth3DS = auth3DS
         }
     }
     
@@ -826,17 +1230,37 @@ public struct ETP: WSDLService {
         // own properties
         public var payDays: UInt32?
         public var reserveDays: UInt32?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, payDays, reserveDays
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case ProfilePaymentPB.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            payDays: UInt32? = nil,
+            reserveDays: UInt32? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.payDays = payDays
+            self.reserveDays = reserveDays
         }
     }
     
@@ -853,17 +1277,37 @@ public struct ETP: WSDLService {
         // own properties
         public var mandateID: String?
         public var dateOfSignature: Date?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, timeout, manualClearing, useProfile, profileID, mandateID, dateOfSignature
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case ProfilePaymentELV.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            timeout: UInt32? = nil,
+            manualClearing: Bool? = nil,
+            useProfile: Bool? = nil,
+            profileID: String? = nil,
+            mandateID: String? = nil,
+            dateOfSignature: Date? = nil
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.timeout = timeout
+            self.manualClearing = manualClearing
+            self.useProfile = useProfile
+            self.profileID = profileID
+            self.mandateID = mandateID
+            self.dateOfSignature = dateOfSignature
         }
     }
     
@@ -878,17 +1322,25 @@ public struct ETP: WSDLService {
         public var xsiType: String = "tns:Withdraw"
         public var amount: UInt32
         public var currency: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case Withdraw.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String
+        )  {
+            self.amount = amount
+            self.currency = currency
         }
     }
     
@@ -902,17 +1354,31 @@ public struct ETP: WSDLService {
         public var brand: String
         public var identifier: String
         public var expiry: UInt32
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, brand, identifier, expiry
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case WithdrawCC.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            brand: String,
+            identifier: String,
+            expiry: UInt32
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.brand = brand
+            self.identifier = identifier
+            self.expiry = expiry
         }
     }
     
@@ -925,17 +1391,29 @@ public struct ETP: WSDLService {
         // own properties
         public var identifier: String
         public var expiry: UInt32
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, identifier, expiry
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case WithdrawMAESTRO.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            identifier: String,
+            expiry: UInt32
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.identifier = identifier
+            self.expiry = expiry
         }
     }
     
@@ -949,17 +1427,31 @@ public struct ETP: WSDLService {
         public var brand: String
         public var iban: String
         public var bic: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, currency, brand, iban, bic
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case WithdrawELV.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32,
+            currency: String,
+            brand: String,
+            iban: String,
+            bic: String
+        )  {
+            self.amount = amount
+            self.currency = currency
+            self.brand = brand
+            self.iban = iban
+            self.bic = bic
         }
     }
     
@@ -972,6 +1464,24 @@ public struct ETP: WSDLService {
         public var quantity: UInt32?
         public var tax: Int32?
         public var amount: Int32
+
+        public init(
+            number: String? = nil,
+            productNr: String? = nil,
+            description: String? = nil,
+            package: String? = nil,
+            quantity: UInt32? = nil,
+            tax: Int32? = nil,
+            amount: Int32
+        )  {
+            self.number = number
+            self.productNr = productNr
+            self.description = description
+            self.package = package
+            self.quantity = quantity
+            self.tax = tax
+            self.amount = amount
+        }
     }
     
     /// Shopping cart content
@@ -981,6 +1491,20 @@ public struct ETP: WSDLService {
         public var shippingCosts: Int32?
         public var shippingTax: Int32?
         public var tax: Int32?
+
+        public init(
+            item: [Item]? = nil,
+            discount: Int32? = nil,
+            shippingCosts: Int32? = nil,
+            shippingTax: Int32? = nil,
+            tax: Int32? = nil
+        )  {
+            self.item = item
+            self.discount = discount
+            self.shippingCosts = shippingCosts
+            self.shippingTax = shippingTax
+            self.tax = tax
+        }
     }
     
     /// enables IndustrySpecific extensions
@@ -990,16 +1514,20 @@ public struct ETP: WSDLService {
     /// Common industry specific parameters
     public struct IndustrySpecific: Codable, DynamicNodeEncoding, IndustrySpecificProtocol {
         public var xsiType: String = "tns:IndustrySpecific"
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case IndustrySpecific.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+        )  {
         }
     }
     
@@ -1008,17 +1536,25 @@ public struct ETP: WSDLService {
         public var xsiType: String = "tns:AirlineTicket"
         public var iataCode: String
         public var ticketID: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case iataCode, ticketID
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case AirlineTicket.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            iataCode: String,
+            ticketID: String
+        )  {
+            self.iataCode = iataCode
+            self.ticketID = ticketID
         }
     }
     
@@ -1036,6 +1572,34 @@ public struct ETP: WSDLService {
         public var countryCode: String?
         public var email: String?
         public var phone: String?
+
+        public init(
+            mode: AddressMode? = nil,
+            name: String,
+            gender: Gender? = nil,
+            birthday: Date? = nil,
+            street: String? = nil,
+            street2: String? = nil,
+            zip: String? = nil,
+            city: String? = nil,
+            state: String? = nil,
+            countryCode: String? = nil,
+            email: String? = nil,
+            phone: String? = nil
+        )  {
+            self.mode = mode
+            self.name = name
+            self.gender = gender
+            self.birthday = birthday
+            self.street = street
+            self.street2 = street2
+            self.zip = zip
+            self.city = city
+            self.state = state
+            self.countryCode = countryCode
+            self.email = email
+            self.phone = phone
+        }
     }
     
     /// Customer order definition
@@ -1047,27 +1611,9 @@ public struct ETP: WSDLService {
         public var industrySpecific: IndustrySpecific?
         public var billing: Address?
         public var shipping: Address?
-        
+
         enum CodingKeys: CodingKey {
             case clientIP, description, userField, shoppingCart, industrySpecific, billing, shipping
-        }
-
-        public init(
-            clientIP: String? = nil,
-            description: String? = nil,
-            userField: String? = nil,
-            shoppingCart: ShoppingCart? = nil,
-            industrySpecific: IndustrySpecific? = nil,
-            billing: Address? = nil,
-            shipping: Address? = nil
-        )  {
-            self.clientIP = clientIP
-            self.description = description
-            self.userField = userField
-            self.shoppingCart = shoppingCart
-            self.industrySpecific = industrySpecific
-            self.billing = billing
-            self.shipping = shipping
         }
 
         public init(from decoder: Decoder) throws {
@@ -1091,6 +1637,24 @@ public struct ETP: WSDLService {
             try container.encodeIfPresent(self.billing, forKey: .billing)
             try container.encodeIfPresent(self.shipping, forKey: .shipping)
         }
+
+        public init(
+            clientIP: String? = nil,
+            description: String? = nil,
+            userField: String? = nil,
+            shoppingCart: ShoppingCart? = nil,
+            industrySpecific: IndustrySpecific? = nil,
+            billing: Address? = nil,
+            shipping: Address? = nil
+        )  {
+            self.clientIP = clientIP
+            self.description = description
+            self.userField = userField
+            self.shoppingCart = shoppingCart
+            self.industrySpecific = industrySpecific
+            self.billing = billing
+            self.shipping = shipping
+        }
     }
     
     /// enables Callback extensions
@@ -1102,17 +1666,23 @@ public struct ETP: WSDLService {
     public struct Callback: Codable, DynamicNodeEncoding, CallbackProtocol {
         public var xsiType: String = "tns:Callback"
         public var amount: UInt32?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case Callback.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32? = nil
+        )  {
+            self.amount = amount
         }
     }
     
@@ -1123,17 +1693,25 @@ public struct ETP: WSDLService {
         public var amount: UInt32?
         // own properties
         public var cancel: Bool?
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case amount, cancel
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case CallbackPAYPAL.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            amount: UInt32? = nil,
+            cancel: Bool? = nil
+        )  {
+            self.amount = amount
+            self.cancel = cancel
         }
     }
     
@@ -1142,6 +1720,16 @@ public struct ETP: WSDLService {
         public var mpayTID: UInt64
         public var amount: UInt32?
         public var order: Order?
+
+        public init(
+            mpayTID: UInt64,
+            amount: UInt32? = nil,
+            order: Order? = nil
+        )  {
+            self.mpayTID = mpayTID
+            self.amount = amount
+            self.order = order
+        }
     }
     
     /// enables Transaction extensions
@@ -1159,17 +1747,29 @@ public struct ETP: WSDLService {
         public var tStatus: TStatus
         public var stateID: UInt64?
         public var tid: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case mpayTID, tStatus, stateID, tid
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case Transaction.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            mpayTID: UInt64,
+            tStatus: TStatus,
+            stateID: UInt64? = nil,
+            tid: String
+        )  {
+            self.mpayTID = mpayTID
+            self.tStatus = tStatus
+            self.stateID = stateID
+            self.tid = tid
         }
     }
     
@@ -1188,17 +1788,41 @@ public struct ETP: WSDLService {
         public var amount: UInt32
         public var currency: String
         public var bifStatus: String
-        
+
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
             case mpayTID, tStatus, stateID, tid, orderDescription, pType, brand, amount, currency, bifStatus
         }
-        
+
         public static func nodeEncoding(for key: CodingKey) -> XMLEncoder.NodeEncoding {
             switch key {
             case TransactionDetails.CodingKeys.xsiType: return .attribute
             default: return .element
             }
+        }
+
+        public init(
+            mpayTID: UInt64,
+            tStatus: TStatus,
+            stateID: UInt64? = nil,
+            tid: String,
+            orderDescription: String,
+            pType: PaymentType,
+            brand: String,
+            amount: UInt32,
+            currency: String,
+            bifStatus: String
+        )  {
+            self.mpayTID = mpayTID
+            self.tStatus = tStatus
+            self.stateID = stateID
+            self.tid = tid
+            self.orderDescription = orderDescription
+            self.pType = pType
+            self.brand = brand
+            self.amount = amount
+            self.currency = currency
+            self.bifStatus = bifStatus
         }
     }
     
@@ -1206,6 +1830,14 @@ public struct ETP: WSDLService {
     public struct Parameter: Codable {
         public var name: String
         public var value: String
+
+        public init(
+            name: String,
+            value: String
+        )  {
+            self.name = name
+            self.value = value
+        }
     }
     
     /// Entries in the transaction history
@@ -1219,6 +1851,28 @@ public struct ETP: WSDLService {
         public var errNo: Int32?
         public var errText: String?
         public var profileStatus: String
+
+        public init(
+            stateID: UInt64,
+            parentStateID: UInt64? = nil,
+            txState: TxState,
+            amount: UInt32,
+            timeStamp: Date,
+            approvalCode: String? = nil,
+            errNo: Int32? = nil,
+            errText: String? = nil,
+            profileStatus: String
+        )  {
+            self.stateID = stateID
+            self.parentStateID = parentStateID
+            self.txState = txState
+            self.amount = amount
+            self.timeStamp = timeStamp
+            self.approvalCode = approvalCode
+            self.errNo = errNo
+            self.errText = errText
+            self.profileStatus = profileStatus
+        }
     }
     
     /// Results of a confirmation-url call
@@ -1228,6 +1882,20 @@ public struct ETP: WSDLService {
         public var timeStamp: Date
         public var url: URL
         public var result: String
+
+        public init(
+            status: ConfirmationStatus,
+            confirmed: Confirmed,
+            timeStamp: Date,
+            url: URL,
+            result: String
+        )  {
+            self.status = status
+            self.confirmed = confirmed
+            self.timeStamp = timeStamp
+            self.url = url
+            self.result = result
+        }
     }
     
     /// Configured payment method
@@ -1235,6 +1903,16 @@ public struct ETP: WSDLService {
         public var pType: PaymentType
         public var brand: String
         public var description: String
+
+        public init(
+            pType: PaymentType,
+            brand: String,
+            description: String
+        )  {
+            self.pType = pType
+            self.brand = brand
+            self.description = description
+        }
     }
     
     /// Payment profile details
@@ -1245,6 +1923,22 @@ public struct ETP: WSDLService {
         public var identifier: String
         public var expires: Date?
         public var address: Address?
+
+        public init(
+            pMethodID: UInt32? = nil,
+            profileID: String,
+            updated: Date,
+            identifier: String,
+            expires: Date? = nil,
+            address: Address? = nil
+        )  {
+            self.pMethodID = pMethodID
+            self.profileID = profileID
+            self.updated = updated
+            self.identifier = identifier
+            self.expires = expires
+            self.address = address
+        }
     }
     
     /// Customer profile with payment data
@@ -1252,11 +1946,29 @@ public struct ETP: WSDLService {
         public var customerID: String
         public var updated: Date
         public var payment: [PaymentProfile]?
+
+        public init(
+            customerID: String,
+            updated: Date,
+            payment: [PaymentProfile]? = nil
+        )  {
+            self.customerID = customerID
+            self.updated = updated
+            self.payment = payment
+        }
     }
     
     public struct SelectPayment: Codable {
         public var merchantID: UInt32
         public var mdxi: String
+
+        public init(
+            merchantID: UInt32,
+            mdxi: String
+        )  {
+            self.merchantID = merchantID
+            self.mdxi = mdxi
+        }
     }
     
     public struct SelectPaymentResponse: Codable {
@@ -1265,6 +1977,20 @@ public struct ETP: WSDLService {
         public var errNo: Int32?
         public var errText: String?
         public var location: URL
+
+        public init(
+            status: Status,
+            returnCode: String,
+            errNo: Int32? = nil,
+            errText: String? = nil,
+            location: URL
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.errNo = errNo
+            self.errText = errText
+            self.location = location
+        }
     }
     
     public struct CreatePaymentToken: Codable {
@@ -1276,6 +2002,26 @@ public struct ETP: WSDLService {
         public var profileID: String?
         public var domain: String?
         public var language: String?
+
+        public init(
+            merchantID: UInt32,
+            pType: PaymentType,
+            templateSet: String? = nil,
+            style: String? = nil,
+            customerID: String? = nil,
+            profileID: String? = nil,
+            domain: String? = nil,
+            language: String? = nil
+        )  {
+            self.merchantID = merchantID
+            self.pType = pType
+            self.templateSet = templateSet
+            self.style = style
+            self.customerID = customerID
+            self.profileID = profileID
+            self.domain = domain
+            self.language = language
+        }
     }
     
     public struct CreatePaymentTokenResponse: Codable {
@@ -1286,6 +2032,24 @@ public struct ETP: WSDLService {
         public var errNo: Int32?
         public var errText: String?
         public var location: URL?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            token: String? = nil,
+            apiKey: String? = nil,
+            errNo: Int32? = nil,
+            errText: String? = nil,
+            location: URL? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.token = token
+            self.apiKey = apiKey
+            self.errNo = errNo
+            self.errText = errText
+            self.location = location
+        }
     }
     
     public struct CreateApplePayToken: Codable {
@@ -1295,6 +2059,22 @@ public struct ETP: WSDLService {
         public var order: Order?
         public var domain: String?
         public var language: String?
+
+        public init(
+            merchantID: UInt32,
+            amount: UInt32,
+            currency: String,
+            order: Order? = nil,
+            domain: String? = nil,
+            language: String? = nil
+        )  {
+            self.merchantID = merchantID
+            self.amount = amount
+            self.currency = currency
+            self.order = order
+            self.domain = domain
+            self.language = language
+        }
     }
     
     public struct CreateApplePayTokenResponse: Codable {
@@ -1304,6 +2084,22 @@ public struct ETP: WSDLService {
         public var apiKey: String?
         public var errNo: Int32?
         public var errText: String?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            token: String? = nil,
+            apiKey: String? = nil,
+            errNo: Int32? = nil,
+            errText: String? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.token = token
+            self.apiKey = apiKey
+            self.errNo = errNo
+            self.errText = errText
+        }
     }
     
     public struct CreateGooglePayToken: Codable {
@@ -1312,6 +2108,20 @@ public struct ETP: WSDLService {
         public var currency: String
         public var order: Order?
         public var language: String?
+
+        public init(
+            merchantID: UInt32,
+            amount: UInt32,
+            currency: String,
+            order: Order? = nil,
+            language: String? = nil
+        )  {
+            self.merchantID = merchantID
+            self.amount = amount
+            self.currency = currency
+            self.order = order
+            self.language = language
+        }
     }
     
     public struct CreateGooglePayTokenResponse: Codable {
@@ -1321,6 +2131,22 @@ public struct ETP: WSDLService {
         public var apiKey: String?
         public var errNo: Int32?
         public var errText: String?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            token: String? = nil,
+            apiKey: String? = nil,
+            errNo: Int32? = nil,
+            errText: String? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.token = token
+            self.apiKey = apiKey
+            self.errNo = errNo
+            self.errText = errText
+        }
     }
     
     public struct CreateCustomer: Codable {
@@ -1336,37 +2162,9 @@ public struct ETP: WSDLService {
         public var errorURL: URL?
         public var confirmationURL: URL?
         public var language: String?
-        
+
         enum CodingKeys: CodingKey {
             case merchantID, tid, pType, paymentData, customerID, customerName, order, billingAddress, successURL, errorURL, confirmationURL, language
-        }
-
-        public init(
-            merchantID: UInt32,
-            tid: String? = nil,
-            pType: PaymentType,
-            paymentData: PaymentDataProtocol,
-            customerID: String,
-            customerName: String? = nil,
-            order: Order? = nil,
-            billingAddress: Address? = nil,
-            successURL: URL? = nil,
-            errorURL: URL? = nil,
-            confirmationURL: URL? = nil,
-            language: String? = nil
-        )  {
-            self.merchantID = merchantID
-            self.tid = tid
-            self.pType = pType
-            self.paymentData = paymentData
-            self.customerID = customerID
-            self.customerName = customerName
-            self.order = order
-            self.billingAddress = billingAddress
-            self.successURL = successURL
-            self.errorURL = errorURL
-            self.confirmationURL = confirmationURL
-            self.language = language
         }
 
         public init(from decoder: Decoder) throws {
@@ -1400,6 +2198,34 @@ public struct ETP: WSDLService {
             try container.encodeIfPresent(self.confirmationURL, forKey: .confirmationURL)
             try container.encodeIfPresent(self.language, forKey: .language)
         }
+
+        public init(
+            merchantID: UInt32,
+            tid: String? = nil,
+            pType: PaymentType,
+            paymentData: PaymentDataProtocol,
+            customerID: String,
+            customerName: String? = nil,
+            order: Order? = nil,
+            billingAddress: Address? = nil,
+            successURL: URL? = nil,
+            errorURL: URL? = nil,
+            confirmationURL: URL? = nil,
+            language: String? = nil
+        )  {
+            self.merchantID = merchantID
+            self.tid = tid
+            self.pType = pType
+            self.paymentData = paymentData
+            self.customerID = customerID
+            self.customerName = customerName
+            self.order = order
+            self.billingAddress = billingAddress
+            self.successURL = successURL
+            self.errorURL = errorURL
+            self.confirmationURL = confirmationURL
+            self.language = language
+        }
     }
     
     public struct CreateCustomerResponse: Codable {
@@ -1409,6 +2235,22 @@ public struct ETP: WSDLService {
         public var errNo: Int32?
         public var errText: String?
         public var location: URL?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            mpayTID: UInt64? = nil,
+            errNo: Int32? = nil,
+            errText: String? = nil,
+            location: URL? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.mpayTID = mpayTID
+            self.errNo = errNo
+            self.errText = errText
+            self.location = location
+        }
     }
     
     public struct AcceptPayment: Codable {
@@ -1423,35 +2265,9 @@ public struct ETP: WSDLService {
         public var errorURL: URL?
         public var confirmationURL: URL?
         public var language: String?
-        
+
         enum CodingKeys: CodingKey {
             case merchantID, tid, pType, payment, customerID, customerName, order, successURL, errorURL, confirmationURL, language
-        }
-
-        public init(
-            merchantID: UInt32,
-            tid: String,
-            pType: PaymentType,
-            payment: PaymentProtocol,
-            customerID: String? = nil,
-            customerName: String? = nil,
-            order: Order? = nil,
-            successURL: URL? = nil,
-            errorURL: URL? = nil,
-            confirmationURL: URL? = nil,
-            language: String? = nil
-        )  {
-            self.merchantID = merchantID
-            self.tid = tid
-            self.pType = pType
-            self.payment = payment
-            self.customerID = customerID
-            self.customerName = customerName
-            self.order = order
-            self.successURL = successURL
-            self.errorURL = errorURL
-            self.confirmationURL = confirmationURL
-            self.language = language
         }
 
         public init(from decoder: Decoder) throws {
@@ -1483,6 +2299,32 @@ public struct ETP: WSDLService {
             try container.encodeIfPresent(self.confirmationURL, forKey: .confirmationURL)
             try container.encodeIfPresent(self.language, forKey: .language)
         }
+
+        public init(
+            merchantID: UInt32,
+            tid: String,
+            pType: PaymentType,
+            payment: PaymentProtocol,
+            customerID: String? = nil,
+            customerName: String? = nil,
+            order: Order? = nil,
+            successURL: URL? = nil,
+            errorURL: URL? = nil,
+            confirmationURL: URL? = nil,
+            language: String? = nil
+        )  {
+            self.merchantID = merchantID
+            self.tid = tid
+            self.pType = pType
+            self.payment = payment
+            self.customerID = customerID
+            self.customerName = customerName
+            self.order = order
+            self.successURL = successURL
+            self.errorURL = errorURL
+            self.confirmationURL = confirmationURL
+            self.language = language
+        }
     }
     
     public struct AcceptPaymentResponse: Codable {
@@ -1492,6 +2334,22 @@ public struct ETP: WSDLService {
         public var errNo: Int32?
         public var errText: String?
         public var location: URL?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            mpayTID: UInt64? = nil,
+            errNo: Int32? = nil,
+            errText: String? = nil,
+            location: URL? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.mpayTID = mpayTID
+            self.errNo = errNo
+            self.errText = errText
+            self.location = location
+        }
     }
     
     public struct ManualCallback: Codable {
@@ -1499,21 +2357,9 @@ public struct ETP: WSDLService {
         public var mpayTID: UInt64
         public var paymentCallback: CallbackProtocol
         public var order: Order?
-        
+
         enum CodingKeys: CodingKey {
             case merchantID, mpayTID, paymentCallback, order
-        }
-
-        public init(
-            merchantID: UInt32,
-            mpayTID: UInt64,
-            paymentCallback: CallbackProtocol,
-            order: Order? = nil
-        )  {
-            self.merchantID = merchantID
-            self.mpayTID = mpayTID
-            self.paymentCallback = paymentCallback
-            self.order = order
         }
 
         public init(from decoder: Decoder) throws {
@@ -1531,6 +2377,18 @@ public struct ETP: WSDLService {
             try container.encode(self.paymentCallback, forKey: .paymentCallback)
             try container.encodeIfPresent(self.order, forKey: .order)
         }
+
+        public init(
+            merchantID: UInt32,
+            mpayTID: UInt64,
+            paymentCallback: CallbackProtocol,
+            order: Order? = nil
+        )  {
+            self.merchantID = merchantID
+            self.mpayTID = mpayTID
+            self.paymentCallback = paymentCallback
+            self.order = order
+        }
     }
     
     public struct ManualCallbackResponse: Codable {
@@ -1540,41 +2398,73 @@ public struct ETP: WSDLService {
         public var errNo: Int32?
         public var errText: String?
         public var location: URL?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            mpayTID: UInt64? = nil,
+            errNo: Int32? = nil,
+            errText: String? = nil,
+            location: URL? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.mpayTID = mpayTID
+            self.errNo = errNo
+            self.errText = errText
+            self.location = location
+        }
     }
     
     public struct ManualClear: Codable {
         public var merchantID: UInt32
         public var clearingDetails: [ClearingDetails]?
+
+        public init(
+            merchantID: UInt32,
+            clearingDetails: [ClearingDetails]? = nil
+        )  {
+            self.merchantID = merchantID
+            self.clearingDetails = clearingDetails
+        }
     }
     
     public struct ManualClearResponse: Codable {
         public var status: Status
         public var returnCode: String
         public var transaction: [Transaction]?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            transaction: [Transaction]? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.transaction = transaction
+        }
     }
     
     public struct ManualReverse: Codable {
         public var merchantID: UInt32
         public var mpayTID: UInt64
+
+        public init(
+            merchantID: UInt32,
+            mpayTID: UInt64
+        )  {
+            self.merchantID = merchantID
+            self.mpayTID = mpayTID
+        }
     }
     
     public struct ManualReverseResponse: Codable {
         public var status: Status
         public var returnCode: String
         public var transaction: TransactionProtocol
-        
+
         enum CodingKeys: CodingKey {
             case status, returnCode, transaction
-        }
-
-        public init(
-            status: Status,
-            returnCode: String,
-            transaction: TransactionProtocol
-        )  {
-            self.status = status
-            self.returnCode = returnCode
-            self.transaction = transaction
         }
 
         public init(from decoder: Decoder) throws {
@@ -1589,6 +2479,16 @@ public struct ETP: WSDLService {
             try container.encode(self.status, forKey: .status)
             try container.encode(self.returnCode, forKey: .returnCode)
             try container.encode(self.transaction, forKey: .transaction)
+        }
+
+        public init(
+            status: Status,
+            returnCode: String,
+            transaction: TransactionProtocol
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.transaction = transaction
         }
     }
     
@@ -1597,25 +2497,27 @@ public struct ETP: WSDLService {
         public var mpayTID: UInt64
         public var stateID: UInt64?
         public var amount: UInt32?
+
+        public init(
+            merchantID: UInt32,
+            mpayTID: UInt64,
+            stateID: UInt64? = nil,
+            amount: UInt32? = nil
+        )  {
+            self.merchantID = merchantID
+            self.mpayTID = mpayTID
+            self.stateID = stateID
+            self.amount = amount
+        }
     }
     
     public struct ManualCreditResponse: Codable {
         public var status: Status
         public var returnCode: String
         public var transaction: TransactionProtocol
-        
+
         enum CodingKeys: CodingKey {
             case status, returnCode, transaction
-        }
-
-        public init(
-            status: Status,
-            returnCode: String,
-            transaction: TransactionProtocol
-        )  {
-            self.status = status
-            self.returnCode = returnCode
-            self.transaction = transaction
         }
 
         public init(from decoder: Decoder) throws {
@@ -1630,6 +2532,16 @@ public struct ETP: WSDLService {
             try container.encode(self.status, forKey: .status)
             try container.encode(self.returnCode, forKey: .returnCode)
             try container.encode(self.transaction, forKey: .transaction)
+        }
+
+        public init(
+            status: Status,
+            returnCode: String,
+            transaction: TransactionProtocol
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.transaction = transaction
         }
     }
     
@@ -1643,31 +2555,9 @@ public struct ETP: WSDLService {
         public var order: Order?
         public var confirmationURL: URL?
         public var language: String?
-        
+
         enum CodingKeys: CodingKey {
             case merchantID, tid, pType, withdraw, customerID, customerName, order, confirmationURL, language
-        }
-
-        public init(
-            merchantID: UInt32,
-            tid: String,
-            pType: PaymentType,
-            withdraw: WithdrawProtocol,
-            customerID: String? = nil,
-            customerName: String? = nil,
-            order: Order? = nil,
-            confirmationURL: URL? = nil,
-            language: String? = nil
-        )  {
-            self.merchantID = merchantID
-            self.tid = tid
-            self.pType = pType
-            self.withdraw = withdraw
-            self.customerID = customerID
-            self.customerName = customerName
-            self.order = order
-            self.confirmationURL = confirmationURL
-            self.language = language
         }
 
         public init(from decoder: Decoder) throws {
@@ -1695,6 +2585,28 @@ public struct ETP: WSDLService {
             try container.encodeIfPresent(self.confirmationURL, forKey: .confirmationURL)
             try container.encodeIfPresent(self.language, forKey: .language)
         }
+
+        public init(
+            merchantID: UInt32,
+            tid: String,
+            pType: PaymentType,
+            withdraw: WithdrawProtocol,
+            customerID: String? = nil,
+            customerName: String? = nil,
+            order: Order? = nil,
+            confirmationURL: URL? = nil,
+            language: String? = nil
+        )  {
+            self.merchantID = merchantID
+            self.tid = tid
+            self.pType = pType
+            self.withdraw = withdraw
+            self.customerID = customerID
+            self.customerName = customerName
+            self.order = order
+            self.confirmationURL = confirmationURL
+            self.language = language
+        }
     }
     
     public struct AcceptWithdrawResponse: Codable {
@@ -1703,40 +2615,110 @@ public struct ETP: WSDLService {
         public var mpayTID: UInt64?
         public var errNo: Int32?
         public var errText: String?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            mpayTID: UInt64? = nil,
+            errNo: Int32? = nil,
+            errText: String? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.mpayTID = mpayTID
+            self.errNo = errNo
+            self.errText = errText
+        }
     }
     
     public struct TransactionStatus: Codable {
         public var merchantID: UInt32
         public var mpayTID: UInt64?
         public var tid: String?
+
+        public init(
+            merchantID: UInt32,
+            mpayTID: UInt64? = nil,
+            tid: String? = nil
+        )  {
+            self.merchantID = merchantID
+            self.mpayTID = mpayTID
+            self.tid = tid
+        }
     }
     
     public struct TransactionStatusResponse: Codable {
         public var status: Status
         public var returnCode: String
         public var parameter: [Parameter]?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            parameter: [Parameter]? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.parameter = parameter
+        }
     }
     
     public struct TransactionConfirmation: Codable {
         public var merchantID: UInt32
         public var mpayTID: UInt64
+
+        public init(
+            merchantID: UInt32,
+            mpayTID: UInt64
+        )  {
+            self.merchantID = merchantID
+            self.mpayTID = mpayTID
+        }
     }
     
     public struct TransactionConfirmationResponse: Codable {
         public var status: Status
         public var returnCode: String
         public var confirmation: [Confirmation]?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            confirmation: [Confirmation]? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.confirmation = confirmation
+        }
     }
     
     public struct TransactionHistory: Codable {
         public var merchantID: UInt32
         public var mpayTID: UInt64
+
+        public init(
+            merchantID: UInt32,
+            mpayTID: UInt64
+        )  {
+            self.merchantID = merchantID
+            self.mpayTID = mpayTID
+        }
     }
     
     public struct TransactionHistoryResponse: Codable {
         public var status: Status
         public var returnCode: String
         public var historyEntry: [HistoryEntry]?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            historyEntry: [HistoryEntry]? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.historyEntry = historyEntry
+        }
     }
     
     public struct ListNotCleared: Codable {
@@ -1746,6 +2728,22 @@ public struct ETP: WSDLService {
         public var sortField: SortField?
         public var sortType: SortType?
         public var listInProgress: Bool?
+
+        public init(
+            merchantID: UInt32,
+            begin: UInt32? = nil,
+            size: UInt32? = nil,
+            sortField: SortField? = nil,
+            sortType: SortType? = nil,
+            listInProgress: Bool? = nil
+        )  {
+            self.merchantID = merchantID
+            self.begin = begin
+            self.size = size
+            self.sortField = sortField
+            self.sortType = sortType
+            self.listInProgress = listInProgress
+        }
     }
     
     public struct ListNotClearedResponse: Codable {
@@ -1753,11 +2751,31 @@ public struct ETP: WSDLService {
         public var returnCode: String
         public var transactionDetails: [TransactionDetails]?
         public var all: UInt32
+
+        public init(
+            status: Status,
+            returnCode: String,
+            transactionDetails: [TransactionDetails]? = nil,
+            all: UInt32
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.transactionDetails = transactionDetails
+            self.all = all
+        }
     }
     
     public struct ListPaymentMethods: Codable {
         public var merchantID: UInt32
         public var pType: PaymentType?
+
+        public init(
+            merchantID: UInt32,
+            pType: PaymentType? = nil
+        )  {
+            self.merchantID = merchantID
+            self.pType = pType
+        }
     }
     
     public struct ListPaymentMethodsResponse: Codable {
@@ -1765,11 +2783,31 @@ public struct ETP: WSDLService {
         public var returnCode: String
         public var paymentMethod: [PaymentMethod]?
         public var all: UInt32
+
+        public init(
+            status: Status,
+            returnCode: String,
+            paymentMethod: [PaymentMethod]? = nil,
+            all: UInt32
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.paymentMethod = paymentMethod
+            self.all = all
+        }
     }
     
     public struct CreateProfile: Codable {
         public var merchantID: UInt32
         public var mdxi: String
+
+        public init(
+            merchantID: UInt32,
+            mdxi: String
+        )  {
+            self.merchantID = merchantID
+            self.mdxi = mdxi
+        }
     }
     
     public struct CreateProfileResponse: Codable {
@@ -1778,6 +2816,20 @@ public struct ETP: WSDLService {
         public var errNo: Int32?
         public var errText: String?
         public var location: URL?
+
+        public init(
+            status: Status,
+            returnCode: String,
+            errNo: Int32? = nil,
+            errText: String? = nil,
+            location: URL? = nil
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.errNo = errNo
+            self.errText = errText
+            self.location = location
+        }
     }
     
     public struct ListProfiles: Codable {
@@ -1786,6 +2838,20 @@ public struct ETP: WSDLService {
         public var expiredBy: Date?
         public var begin: UInt32?
         public var size: UInt32?
+
+        public init(
+            merchantID: UInt32,
+            customerID: String? = nil,
+            expiredBy: Date? = nil,
+            begin: UInt32? = nil,
+            size: UInt32? = nil
+        )  {
+            self.merchantID = merchantID
+            self.customerID = customerID
+            self.expiredBy = expiredBy
+            self.begin = begin
+            self.size = size
+        }
     }
     
     public struct ListProfilesResponse: Codable {
@@ -1793,16 +2859,46 @@ public struct ETP: WSDLService {
         public var returnCode: String
         public var profile: [Profile]?
         public var all: UInt32
+
+        public init(
+            status: Status,
+            returnCode: String,
+            profile: [Profile]? = nil,
+            all: UInt32
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+            self.profile = profile
+            self.all = all
+        }
     }
     
     public struct DeleteProfile: Codable {
         public var merchantID: UInt32
         public var customerID: String
         public var profileID: String?
+
+        public init(
+            merchantID: UInt32,
+            customerID: String,
+            profileID: String? = nil
+        )  {
+            self.merchantID = merchantID
+            self.customerID = customerID
+            self.profileID = profileID
+        }
     }
     
     public struct DeleteProfileResponse: Codable {
         public var status: Status
         public var returnCode: String
+
+        public init(
+            status: Status,
+            returnCode: String
+        )  {
+            self.status = status
+            self.returnCode = returnCode
+        }
     }
 }
