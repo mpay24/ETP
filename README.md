@@ -1,5 +1,7 @@
 ## mPAY24 SOAP API Swift Package ##
 
+[![Build](https://github.com/mpay24/ETP/actions/workflows/build.yml/badge.svg)]([https://github.com/unzercorp/mpay24-platform/actions/workflows/build.yml]
+
 Add the package to your project using Swift Package Managger
 
 Example usage:
