@@ -1880,14 +1880,14 @@ public struct ETP: WSDLService {
         public var status: ConfirmationStatus
         public var confirmed: Confirmed
         public var timeStamp: Date
-        public var url: URL
+        public var url: String
         public var result: String
 
         public init(
             status: ConfirmationStatus,
             confirmed: Confirmed,
             timeStamp: Date,
-            url: URL,
+            url: String,
             result: String
         )  {
             self.status = status
@@ -1976,14 +1976,14 @@ public struct ETP: WSDLService {
         public var returnCode: String
         public var errNo: Int32?
         public var errText: String?
-        public var location: URL
+        public var location: String
 
         public init(
             status: Status,
             returnCode: String,
             errNo: Int32? = nil,
             errText: String? = nil,
-            location: URL
+            location: String
         )  {
             self.status = status
             self.returnCode = returnCode
@@ -2031,7 +2031,7 @@ public struct ETP: WSDLService {
         public var apiKey: String?
         public var errNo: Int32?
         public var errText: String?
-        public var location: URL?
+        public var location: String?
 
         public init(
             status: Status,
@@ -2040,7 +2040,7 @@ public struct ETP: WSDLService {
             apiKey: String? = nil,
             errNo: Int32? = nil,
             errText: String? = nil,
-            location: URL? = nil
+            location: String? = nil
         )  {
             self.status = status
             self.returnCode = returnCode
@@ -2158,9 +2158,9 @@ public struct ETP: WSDLService {
         public var customerName: String?
         public var order: Order?
         public var billingAddress: Address?
-        public var successURL: URL?
-        public var errorURL: URL?
-        public var confirmationURL: URL?
+        public var successURL: String?
+        public var errorURL: String?
+        public var confirmationURL: String?
         public var language: String?
 
         enum CodingKeys: CodingKey {
@@ -2177,9 +2177,9 @@ public struct ETP: WSDLService {
             self.customerName = try container.decodeIfPresent(String.self, forKey: .customerName)
             self.order = try container.decodeIfPresent(Order.self, forKey: .order)
             self.billingAddress = try container.decodeIfPresent(Address.self, forKey: .billingAddress)
-            self.successURL = try container.decodeIfPresent(URL.self, forKey: .successURL)
-            self.errorURL = try container.decodeIfPresent(URL.self, forKey: .errorURL)
-            self.confirmationURL = try container.decodeIfPresent(URL.self, forKey: .confirmationURL)
+            self.successURL = try container.decodeIfPresent(String.self, forKey: .successURL)
+            self.errorURL = try container.decodeIfPresent(String.self, forKey: .errorURL)
+            self.confirmationURL = try container.decodeIfPresent(String.self, forKey: .confirmationURL)
             self.language = try container.decodeIfPresent(String.self, forKey: .language)
         }
 
@@ -2208,9 +2208,9 @@ public struct ETP: WSDLService {
             customerName: String? = nil,
             order: Order? = nil,
             billingAddress: Address? = nil,
-            successURL: URL? = nil,
-            errorURL: URL? = nil,
-            confirmationURL: URL? = nil,
+            successURL: String? = nil,
+            errorURL: String? = nil,
+            confirmationURL: String? = nil,
             language: String? = nil
         )  {
             self.merchantID = merchantID
@@ -2234,7 +2234,7 @@ public struct ETP: WSDLService {
         public var mpayTID: UInt64?
         public var errNo: Int32?
         public var errText: String?
-        public var location: URL?
+        public var location: String?
 
         public init(
             status: Status,
@@ -2242,7 +2242,7 @@ public struct ETP: WSDLService {
             mpayTID: UInt64? = nil,
             errNo: Int32? = nil,
             errText: String? = nil,
-            location: URL? = nil
+            location: String? = nil
         )  {
             self.status = status
             self.returnCode = returnCode
@@ -2261,9 +2261,9 @@ public struct ETP: WSDLService {
         public var customerID: String?
         public var customerName: String?
         public var order: Order?
-        public var successURL: URL?
-        public var errorURL: URL?
-        public var confirmationURL: URL?
+        public var successURL: String?
+        public var errorURL: String?
+        public var confirmationURL: String?
         public var language: String?
 
         enum CodingKeys: CodingKey {
@@ -2279,9 +2279,9 @@ public struct ETP: WSDLService {
             self.customerID = try container.decodeIfPresent(String.self, forKey: .customerID)
             self.customerName = try container.decodeIfPresent(String.self, forKey: .customerName)
             self.order = try container.decodeIfPresent(Order.self, forKey: .order)
-            self.successURL = try container.decodeIfPresent(URL.self, forKey: .successURL)
-            self.errorURL = try container.decodeIfPresent(URL.self, forKey: .errorURL)
-            self.confirmationURL = try container.decodeIfPresent(URL.self, forKey: .confirmationURL)
+            self.successURL = try container.decodeIfPresent(String.self, forKey: .successURL)
+            self.errorURL = try container.decodeIfPresent(String.self, forKey: .errorURL)
+            self.confirmationURL = try container.decodeIfPresent(String.self, forKey: .confirmationURL)
             self.language = try container.decodeIfPresent(String.self, forKey: .language)
         }
 
@@ -2308,9 +2308,9 @@ public struct ETP: WSDLService {
             customerID: String? = nil,
             customerName: String? = nil,
             order: Order? = nil,
-            successURL: URL? = nil,
-            errorURL: URL? = nil,
-            confirmationURL: URL? = nil,
+            successURL: String? = nil,
+            errorURL: String? = nil,
+            confirmationURL: String? = nil,
             language: String? = nil
         )  {
             self.merchantID = merchantID
@@ -2333,7 +2333,7 @@ public struct ETP: WSDLService {
         public var mpayTID: UInt64?
         public var errNo: Int32?
         public var errText: String?
-        public var location: URL?
+        public var location: String?
 
         public init(
             status: Status,
@@ -2341,7 +2341,7 @@ public struct ETP: WSDLService {
             mpayTID: UInt64? = nil,
             errNo: Int32? = nil,
             errText: String? = nil,
-            location: URL? = nil
+            location: String? = nil
         )  {
             self.status = status
             self.returnCode = returnCode
@@ -2397,7 +2397,7 @@ public struct ETP: WSDLService {
         public var mpayTID: UInt64?
         public var errNo: Int32?
         public var errText: String?
-        public var location: URL?
+        public var location: String?
 
         public init(
             status: Status,
@@ -2405,7 +2405,7 @@ public struct ETP: WSDLService {
             mpayTID: UInt64? = nil,
             errNo: Int32? = nil,
             errText: String? = nil,
-            location: URL? = nil
+            location: String? = nil
         )  {
             self.status = status
             self.returnCode = returnCode
@@ -2553,7 +2553,7 @@ public struct ETP: WSDLService {
         public var customerID: String?
         public var customerName: String?
         public var order: Order?
-        public var confirmationURL: URL?
+        public var confirmationURL: String?
         public var language: String?
 
         enum CodingKeys: CodingKey {
@@ -2569,7 +2569,7 @@ public struct ETP: WSDLService {
             self.customerID = try container.decodeIfPresent(String.self, forKey: .customerID)
             self.customerName = try container.decodeIfPresent(String.self, forKey: .customerName)
             self.order = try container.decodeIfPresent(Order.self, forKey: .order)
-            self.confirmationURL = try container.decodeIfPresent(URL.self, forKey: .confirmationURL)
+            self.confirmationURL = try container.decodeIfPresent(String.self, forKey: .confirmationURL)
             self.language = try container.decodeIfPresent(String.self, forKey: .language)
         }
 
@@ -2594,7 +2594,7 @@ public struct ETP: WSDLService {
             customerID: String? = nil,
             customerName: String? = nil,
             order: Order? = nil,
-            confirmationURL: URL? = nil,
+            confirmationURL: String? = nil,
             language: String? = nil
         )  {
             self.merchantID = merchantID
@@ -2815,14 +2815,14 @@ public struct ETP: WSDLService {
         public var returnCode: String
         public var errNo: Int32?
         public var errText: String?
-        public var location: URL?
+        public var location: String?
 
         public init(
             status: Status,
             returnCode: String,
             errNo: Int32? = nil,
             errText: String? = nil,
-            location: URL? = nil
+            location: String? = nil
         )  {
             self.status = status
             self.returnCode = returnCode
