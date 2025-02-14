@@ -142,6 +142,7 @@ public struct ETP: WSDLService {
         case WECHATPAY
         case PREPAYMENT
         case TWINT
+        case OPENBANKING
         case TOKEN
         case PROFILE
         public var description: String { rawValue }
