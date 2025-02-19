@@ -17,7 +17,7 @@ ETP_Status ETP_Status_enumFromString(NSString *string)
 	if([string isEqualToString:@"ERROR"]) {
 		return ETP_Status_ERROR;
 	}
-	
+
 	return ETP_Status_none;
 }
 NSString * ETP_Status_stringFromEnum(ETP_Status enumValue)
@@ -116,13 +116,16 @@ ETP_PaymentType ETP_PaymentType_enumFromString(NSString *string)
     if([string isEqualToString:@"TWINT"]) {
         return ETP_PaymentType_TWINT;
     }
+    if([string isEqualToString:@"OPENBANKING"]) {
+        return ETP_PaymentType_OPENBANKING;
+    }
 	if([string isEqualToString:@"TOKEN"]) {
 		return ETP_PaymentType_TOKEN;
 	}
 	if([string isEqualToString:@"PROFILE"]) {
 		return ETP_PaymentType_PROFILE;
 	}
-	
+
 	return ETP_PaymentType_none;
 }
 NSString * ETP_PaymentType_stringFromEnum(ETP_PaymentType enumValue)
@@ -278,7 +281,7 @@ ETP_TxState ETP_TxState_enumFromString(NSString *string)
 	if([string isEqualToString:@"ERROR"]) {
 		return ETP_TxState_ERROR;
 	}
-	
+
 	return ETP_TxState_none;
 }
 NSString * ETP_TxState_stringFromEnum(ETP_TxState enumValue)
@@ -365,7 +368,7 @@ ETP_TStatus ETP_TStatus_enumFromString(NSString *string)
 	if([string isEqualToString:@"CREDITED"]) {
 		return ETP_TStatus_CREDITED;
 	}
-	
+
 	return ETP_TStatus_none;
 }
 NSString * ETP_TStatus_stringFromEnum(ETP_TStatus enumValue)
@@ -407,7 +410,7 @@ ETP_ConfirmationStatus ETP_ConfirmationStatus_enumFromString(NSString *string)
 	if([string isEqualToString:@"FAILURE"]) {
 		return ETP_ConfirmationStatus_FAILURE;
 	}
-	
+
 	return ETP_ConfirmationStatus_none;
 }
 NSString * ETP_ConfirmationStatus_stringFromEnum(ETP_ConfirmationStatus enumValue)
@@ -464,7 +467,7 @@ ETP_Confirmed ETP_Confirmed_enumFromString(NSString *string)
 	if([string isEqualToString:@"ERROR"]) {
 		return ETP_Confirmed_ERROR;
 	}
-	
+
 	return ETP_Confirmed_none;
 }
 NSString * ETP_Confirmed_stringFromEnum(ETP_Confirmed enumValue)
@@ -536,7 +539,7 @@ ETP_SortField ETP_SortField_enumFromString(NSString *string)
 	if([string isEqualToString:@"CURRTIME"]) {
 		return ETP_SortField_CURRTIME;
 	}
-	
+
 	return ETP_SortField_none;
 }
 NSString * ETP_SortField_stringFromEnum(ETP_SortField enumValue)
@@ -581,7 +584,7 @@ ETP_SortType ETP_SortType_enumFromString(NSString *string)
 	if([string isEqualToString:@"DESC"]) {
 		return ETP_SortType_DESC;
 	}
-	
+
 	return ETP_SortType_none;
 }
 NSString * ETP_SortType_stringFromEnum(ETP_SortType enumValue)
@@ -605,7 +608,7 @@ ETP_AddressMode ETP_AddressMode_enumFromString(NSString *string)
 	if([string isEqualToString:@"READWRITE"]) {
 		return ETP_AddressMode_READWRITE;
 	}
-	
+
 	return ETP_AddressMode_none;
 }
 NSString * ETP_AddressMode_stringFromEnum(ETP_AddressMode enumValue)
@@ -629,7 +632,7 @@ ETP_Gender ETP_Gender_enumFromString(NSString *string)
 	if([string isEqualToString:@"FEMALE"]) {
 		return ETP_Gender_FEMALE;
 	}
-	
+
 	return ETP_Gender_none;
 }
 NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
@@ -653,7 +656,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		validate = 0;
 		profileID = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -661,7 +664,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(validate != nil) [validate release];
 	if(profileID != nil) [profileID release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -680,20 +683,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.validate != 0) {
 		xmlAddChild(node, [self.validate xmlNodeForDoc:node->doc elementName:@"validate" elementNSPrefix:nil]);
 	}
@@ -708,16 +711,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentData *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentData *newObject = [[ETP_PaymentData new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -725,88 +728,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "validate")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.validate = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "profileID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.profileID = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -816,7 +819,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -855,14 +858,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		token = 0;
 		auth3DS = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(token != nil) [token release];
 	if(auth3DS != nil) [auth3DS release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -884,22 +887,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentDataTOKEN");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.token != 0) {
 		xmlAddChild(node, [self.token xmlNodeForDoc:node->doc elementName:@"token" elementNSPrefix:nil]);
 	}
@@ -914,16 +917,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentDataTOKEN *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentDataTOKEN *newObject = [[ETP_PaymentDataTOKEN new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -932,89 +935,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "token")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.token = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "auth3DS")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.auth3DS = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -1024,7 +1027,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -1066,7 +1069,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		cvc = 0;
 		auth3DS = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -1076,7 +1079,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(expiry != nil) [expiry release];
 	if(cvc != nil) [cvc release];
 	if(auth3DS != nil) [auth3DS release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -1098,22 +1101,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentDataCC");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -1140,16 +1143,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentDataCC *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentDataCC *newObject = [[ETP_PaymentDataCC new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -1158,188 +1161,188 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "identifier")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.identifier = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "expiry")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.expiry = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "cvc")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.cvc = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "auth3DS")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.auth3DS = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -1349,7 +1352,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -1391,7 +1394,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		mandateID = 0;
 		dateOfSignature = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -1401,7 +1404,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(bic != nil) [bic release];
 	if(mandateID != nil) [mandateID release];
 	if(dateOfSignature != nil) [dateOfSignature release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -1423,22 +1426,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentDataELV");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -1465,16 +1468,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentDataELV *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentDataELV *newObject = [[ETP_PaymentDataELV new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -1483,188 +1486,188 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "iban")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.iban = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "bic")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.bic = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mandateID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mandateID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "dateOfSignature")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.dateOfSignature = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -1674,7 +1677,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -1718,7 +1721,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		useProfile = 0;
 		profileID = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -1730,7 +1733,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(manualClearing != nil) [manualClearing release];
 	if(useProfile != nil) [useProfile release];
 	if(profileID != nil) [profileID release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -1749,20 +1752,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.amount != 0) {
 		xmlAddChild(node, [self.amount xmlNodeForDoc:node->doc elementName:@"amount" elementNSPrefix:nil]);
 	}
@@ -1793,16 +1796,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Payment *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Payment *newObject = [[ETP_Payment new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -1810,220 +1813,220 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.amount = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "currency")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.currency = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "timeout")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.timeout = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "manualClearing")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.manualClearing = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "useProfile")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.useProfile = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "profileID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.profileID = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -2033,7 +2036,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -2071,13 +2074,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [super init])) {
 		token = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(token != nil) [token release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -2099,22 +2102,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentTOKEN");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.token != 0) {
 		xmlAddChild(node, [self.token xmlNodeForDoc:node->doc elementName:@"token" elementNSPrefix:nil]);
 	}
@@ -2125,16 +2128,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentTOKEN *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentTOKEN *newObject = [[ETP_PaymentTOKEN new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -2143,56 +2146,56 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "token")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.token = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -2202,7 +2205,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -2244,7 +2247,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		cvc = 0;
 		auth3DS = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -2254,7 +2257,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(expiry != nil) [expiry release];
 	if(cvc != nil) [cvc release];
 	if(auth3DS != nil) [auth3DS release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -2276,22 +2279,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentCC");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -2318,16 +2321,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentCC *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentCC *newObject = [[ETP_PaymentCC new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -2336,188 +2339,188 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "identifier")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.identifier = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "expiry")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.expiry = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "cvc")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.cvc = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "auth3DS")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.auth3DS = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -2527,7 +2530,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -2567,7 +2570,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		expiry = 0;
 		cvc = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -2575,7 +2578,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(identifier != nil) [identifier release];
 	if(expiry != nil) [expiry release];
 	if(cvc != nil) [cvc release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -2597,22 +2600,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentCB");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.identifier != 0) {
 		xmlAddChild(node, [self.identifier xmlNodeForDoc:node->doc elementName:@"identifier" elementNSPrefix:nil]);
 	}
@@ -2631,16 +2634,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentCB *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentCB *newObject = [[ETP_PaymentCB new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -2649,122 +2652,122 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "identifier")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.identifier = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "expiry")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.expiry = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "cvc")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.cvc = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -2774,7 +2777,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -2813,14 +2816,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		identifier = 0;
 		expiry = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(identifier != nil) [identifier release];
 	if(expiry != nil) [expiry release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -2842,22 +2845,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentMAESTRO");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.identifier != 0) {
 		xmlAddChild(node, [self.identifier xmlNodeForDoc:node->doc elementName:@"identifier" elementNSPrefix:nil]);
 	}
@@ -2872,16 +2875,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentMAESTRO *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentMAESTRO *newObject = [[ETP_PaymentMAESTRO new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -2890,89 +2893,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "identifier")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.identifier = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "expiry")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.expiry = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -2982,7 +2985,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -3022,7 +3025,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		bankID = 0;
 		bic = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -3030,7 +3033,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(brand != nil) [brand release];
 	if(bankID != nil) [bankID release];
 	if(bic != nil) [bic release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -3052,22 +3055,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentEPS");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -3086,16 +3089,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentEPS *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentEPS *newObject = [[ETP_PaymentEPS new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -3104,122 +3107,122 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "bankID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.bankID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "bic")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.bic = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -3229,7 +3232,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -3269,7 +3272,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		payDays = 0;
 		reserveDays = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -3277,7 +3280,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(identifier != nil) [identifier release];
 	if(payDays != nil) [payDays release];
 	if(reserveDays != nil) [reserveDays release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -3299,22 +3302,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentPB");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.identifier != 0) {
 		xmlAddChild(node, [self.identifier xmlNodeForDoc:node->doc elementName:@"identifier" elementNSPrefix:nil]);
 	}
@@ -3333,16 +3336,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentPB *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentPB *newObject = [[ETP_PaymentPB new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -3351,122 +3354,122 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "identifier")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.identifier = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "payDays")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.payDays = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "reserveDays")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.reserveDays = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -3476,7 +3479,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -3518,7 +3521,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		mandateID = 0;
 		dateOfSignature = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -3528,7 +3531,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(bic != nil) [bic release];
 	if(mandateID != nil) [mandateID release];
 	if(dateOfSignature != nil) [dateOfSignature release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -3550,22 +3553,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentELV");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -3592,16 +3595,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentELV *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentELV *newObject = [[ETP_PaymentELV new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -3610,188 +3613,188 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "iban")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.iban = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "bic")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.bic = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mandateID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mandateID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "dateOfSignature")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.dateOfSignature = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -3801,7 +3804,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -3840,14 +3843,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		iban = 0;
 		bic = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(iban != nil) [iban release];
 	if(bic != nil) [bic release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -3869,22 +3872,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentGIROPAY");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.iban != 0) {
 		xmlAddChild(node, [self.iban xmlNodeForDoc:node->doc elementName:@"iban" elementNSPrefix:nil]);
 	}
@@ -3899,16 +3902,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentGIROPAY *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentGIROPAY *newObject = [[ETP_PaymentGIROPAY new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -3917,89 +3920,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "iban")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.iban = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "bic")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.bic = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -4009,7 +4012,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -4048,14 +4051,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		commit = 0;
 		custom = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(commit != nil) [commit release];
 	if(custom != nil) [custom release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -4077,22 +4080,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentPAYPAL");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.commit != 0) {
 		xmlAddChild(node, [self.commit xmlNodeForDoc:node->doc elementName:@"commit" elementNSPrefix:nil]);
 	}
@@ -4107,16 +4110,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentPAYPAL *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentPAYPAL *newObject = [[ETP_PaymentPAYPAL new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -4125,89 +4128,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "commit")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.commit = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "custom")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.custom = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -4217,7 +4220,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -4255,13 +4258,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [super init])) {
 		brand = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(brand != nil) [brand release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -4283,22 +4286,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentBILLPAY");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -4309,16 +4312,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentBILLPAY *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentBILLPAY *newObject = [[ETP_PaymentBILLPAY new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -4327,56 +4330,56 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -4386,7 +4389,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -4426,7 +4429,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		personalNumber = 0;
 		pClass = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -4434,7 +4437,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(brand != nil) [brand release];
 	if(personalNumber != nil) [personalNumber release];
 	if(pClass != nil) [pClass release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -4456,22 +4459,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentKLARNA");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -4490,16 +4493,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentKLARNA *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentKLARNA *newObject = [[ETP_PaymentKLARNA new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -4508,122 +4511,122 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "personalNumber")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.personalNumber = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pClass")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.pClass = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -4633,7 +4636,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -4672,14 +4675,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		auth3DS = 0;
 		commit = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(auth3DS != nil) [auth3DS release];
 	if(commit != nil) [commit release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -4701,22 +4704,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentMASTERPASS");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.auth3DS != 0) {
 		xmlAddChild(node, [self.auth3DS xmlNodeForDoc:node->doc elementName:@"auth3DS" elementNSPrefix:nil]);
 	}
@@ -4731,16 +4734,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentMASTERPASS *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentMASTERPASS *newObject = [[ETP_PaymentMASTERPASS new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -4749,89 +4752,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "auth3DS")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.auth3DS = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "commit")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.commit = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -4841,7 +4844,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -4879,13 +4882,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [super init])) {
 		brand = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(brand != nil) [brand release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -4907,22 +4910,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentPSC");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -4933,16 +4936,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentPSC *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentPSC *newObject = [[ETP_PaymentPSC new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -4951,56 +4954,56 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -5010,7 +5013,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -5048,13 +5051,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [super init])) {
 		brand = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(brand != nil) [brand release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -5076,22 +5079,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentPOSTFINANCE");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -5102,16 +5105,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentPOSTFINANCE *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentPOSTFINANCE *newObject = [[ETP_PaymentPOSTFINANCE new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -5120,56 +5123,56 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -5179,7 +5182,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -5219,7 +5222,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
         mandateID = 0;
         dateOfSignature = 0;
     }
-    
+
     return self;
 }
 - (void)dealloc
@@ -5227,7 +5230,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
     if(brand != nil) [brand release];
     if(mandateID != nil) [mandateID release];
     if(dateOfSignature != nil) [dateOfSignature release];
-    
+
     [super dealloc];
 }
 - (NSString *)nsPrefix
@@ -5249,22 +5252,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
     xmlNodePtr root = xmlDocGetRootElement(doc);
     xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
     xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentELVSECURE");
-    
+
     [self addAttributesToNode:node];
-    
+
     [self addElementsToNode:node];
-    
+
     return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
     [super addAttributesToNode:node];
-    
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
     [super addElementsToNode:node];
-    
+
     if(self.brand != 0) {
         xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
     }
@@ -5283,16 +5286,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
     NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-    
+
     return attributes;
 }
 + (ETP_PaymentELVSECURE *)deserializeNode:(xmlNodePtr)cur
 {
     ETP_PaymentELVSECURE *newObject = [[ETP_PaymentELVSECURE new] autorelease];
-    
+
     [newObject deserializeAttributesFromNode:cur];
     [newObject deserializeElementsFromNode:cur];
-    
+
     return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -5301,116 +5304,116 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-    
+
     [super deserializeElementsFromNode:cur];
-    
+
     for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
         if(cur->type == XML_ELEMENT_NODE) {
             xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
             NSString *elementString = nil;
-            
+
             if(elementText != NULL) {
                 elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
                 [elementString self]; // avoid compiler warning for unused var
                 xmlFree(elementText);
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [NSString class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.brand = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "mandateID")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [NSString class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.mandateID = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "dateOfSignature")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [NSDate class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.dateOfSignature = newChild;
             }
         }
@@ -5426,7 +5429,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
     if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
         [super performSelector:@selector(initWithCoder:) withObject:decoder];
     if (self == nil) { return nil; }
- 
+
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     unsigned int numIvars = 0;
     Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -5464,13 +5467,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [super init])) {
 		bank = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(bank != nil) [bank release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -5492,22 +5495,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:PaymentIDEAL");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.bank != 0) {
 		xmlAddChild(node, [self.bank xmlNodeForDoc:node->doc elementName:@"bank" elementNSPrefix:nil]);
 	}
@@ -5518,16 +5521,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentIDEAL *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentIDEAL *newObject = [[ETP_PaymentIDEAL new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -5536,56 +5539,56 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "bank")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.bank = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -5595,7 +5598,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -5634,14 +5637,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		cvc = 0;
 		auth3DS = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(cvc != nil) [cvc release];
 	if(auth3DS != nil) [auth3DS release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -5663,22 +5666,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:ProfilePaymentCC");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.cvc != 0) {
 		xmlAddChild(node, [self.cvc xmlNodeForDoc:node->doc elementName:@"cvc" elementNSPrefix:nil]);
 	}
@@ -5693,16 +5696,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ProfilePaymentCC *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ProfilePaymentCC *newObject = [[ETP_ProfilePaymentCC new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -5711,89 +5714,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "cvc")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.cvc = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "auth3DS")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.auth3DS = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -5803,7 +5806,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -5842,14 +5845,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		payDays = 0;
 		reserveDays = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(payDays != nil) [payDays release];
 	if(reserveDays != nil) [reserveDays release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -5871,22 +5874,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:ProfilePaymentPB");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.payDays != 0) {
 		xmlAddChild(node, [self.payDays xmlNodeForDoc:node->doc elementName:@"payDays" elementNSPrefix:nil]);
 	}
@@ -5901,16 +5904,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ProfilePaymentPB *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ProfilePaymentPB *newObject = [[ETP_ProfilePaymentPB new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -5919,89 +5922,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "payDays")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.payDays = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "reserveDays")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.reserveDays = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -6011,7 +6014,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -6050,14 +6053,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		mandateID = 0;
 		dateOfSignature = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(mandateID != nil) [mandateID release];
 	if(dateOfSignature != nil) [dateOfSignature release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -6079,22 +6082,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:ProfilePaymentELV");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.mandateID != 0) {
 		xmlAddChild(node, [self.mandateID xmlNodeForDoc:node->doc elementName:@"mandateID" elementNSPrefix:nil]);
 	}
@@ -6109,16 +6112,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ProfilePaymentELV *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ProfilePaymentELV *newObject = [[ETP_ProfilePaymentELV new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -6127,89 +6130,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mandateID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mandateID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "dateOfSignature")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.dateOfSignature = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -6219,7 +6222,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -6259,7 +6262,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		amount = 0;
 		currency = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -6267,7 +6270,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(amount != nil) [amount release];
 	if(currency != nil) [currency release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -6286,20 +6289,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.amount != 0) {
 		xmlAddChild(node, [self.amount xmlNodeForDoc:node->doc elementName:@"amount" elementNSPrefix:nil]);
 	}
@@ -6314,16 +6317,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Withdraw *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Withdraw *newObject = [[ETP_Withdraw new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -6331,88 +6334,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.amount = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "currency")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.currency = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -6422,7 +6425,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -6462,7 +6465,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		identifier = 0;
 		expiry = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -6470,7 +6473,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(brand != nil) [brand release];
 	if(identifier != nil) [identifier release];
 	if(expiry != nil) [expiry release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -6492,22 +6495,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:WithdrawCC");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -6526,16 +6529,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_WithdrawCC *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_WithdrawCC *newObject = [[ETP_WithdrawCC new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -6544,122 +6547,122 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "identifier")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.identifier = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "expiry")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.expiry = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -6669,7 +6672,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -6708,14 +6711,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		identifier = 0;
 		expiry = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(identifier != nil) [identifier release];
 	if(expiry != nil) [expiry release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -6737,22 +6740,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:WithdrawMAESTRO");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.identifier != 0) {
 		xmlAddChild(node, [self.identifier xmlNodeForDoc:node->doc elementName:@"identifier" elementNSPrefix:nil]);
 	}
@@ -6767,16 +6770,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_WithdrawMAESTRO *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_WithdrawMAESTRO *newObject = [[ETP_WithdrawMAESTRO new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -6785,89 +6788,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "identifier")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.identifier = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "expiry")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.expiry = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -6877,7 +6880,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -6917,7 +6920,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		iban = 0;
 		bic = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -6925,7 +6928,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(brand != nil) [brand release];
 	if(iban != nil) [iban release];
 	if(bic != nil) [bic release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -6947,22 +6950,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:WithdrawELV");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.brand != 0) {
 		xmlAddChild(node, [self.brand xmlNodeForDoc:node->doc elementName:@"brand" elementNSPrefix:nil]);
 	}
@@ -6981,16 +6984,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_WithdrawELV *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_WithdrawELV *newObject = [[ETP_WithdrawELV new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -6999,122 +7002,122 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "iban")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.iban = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "bic")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.bic = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -7124,7 +7127,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -7169,7 +7172,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		tax = 0;
 		amount = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -7182,7 +7185,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(quantity != nil) [quantity release];
 	if(tax != nil) [tax release];
 	if(amount != nil) [amount release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -7201,20 +7204,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.number != 0) {
 		xmlAddChild(node, [self.number xmlNodeForDoc:node->doc elementName:@"number" elementNSPrefix:nil]);
 	}
@@ -7249,16 +7252,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Item *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Item *newObject = [[ETP_Item new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -7266,253 +7269,253 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "number")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.number = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "productNr")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.productNr = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "description")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.description = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "package")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.package = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "quantity")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.quantity = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "tax")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.tax = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.amount = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -7522,7 +7525,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -7565,7 +7568,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		shippingTax = 0;
 		tax = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -7576,7 +7579,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(shippingCosts != nil) [shippingCosts release];
 	if(shippingTax != nil) [shippingTax release];
 	if(tax != nil) [tax release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -7595,20 +7598,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.item != 0) {
 		for(ETP_Item * child in self.item) {
 			xmlAddChild(node, [child xmlNodeForDoc:node->doc elementName:@"item" elementNSPrefix:nil]);
@@ -7641,16 +7644,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ShoppingCart *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ShoppingCart *newObject = [[ETP_ShoppingCart new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -7658,187 +7661,187 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "item")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Item class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.item addObject:newChild];
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "discount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.discount = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "shippingCosts")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.shippingCosts = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "shippingTax")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.shippingTax = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "tax")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.tax = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -7848,7 +7851,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -7886,13 +7889,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 {
 	if((self = [super init])) {
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	[soapSigner release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -7911,35 +7914,35 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
-	
+
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 }
 /* elements */
 /* attributes */
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_IndustrySpecific *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_IndustrySpecific *newObject = [[ETP_IndustrySpecific new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -7947,10 +7950,10 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -7960,7 +7963,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -7999,14 +8002,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		iataCode = 0;
 		ticketID = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(iataCode != nil) [iataCode release];
 	if(ticketID != nil) [ticketID release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -8028,22 +8031,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:AirlineTicket");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.iataCode != 0) {
 		xmlAddChild(node, [self.iataCode xmlNodeForDoc:node->doc elementName:@"iataCode" elementNSPrefix:nil]);
 	}
@@ -8058,16 +8061,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_AirlineTicket *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_AirlineTicket *newObject = [[ETP_AirlineTicket new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -8076,89 +8079,89 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "iataCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.iataCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "ticketID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.ticketID = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -8168,7 +8171,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -8218,7 +8221,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		email = 0;
 		phone = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -8234,7 +8237,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(countryCode != nil) [countryCode release];
 	if(email != nil) [email release];
 	if(phone != nil) [phone release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -8253,20 +8256,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.mode != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"mode", [ETP_AddressMode_stringFromEnum(self.mode) xmlString]);
 	}
@@ -8321,16 +8324,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Address *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Address *newObject = [[ETP_Address new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -8338,362 +8341,362 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mode")) {
-				
+
 				ETP_AddressMode enumRepresentation = ETP_AddressMode_enumFromString(elementString);
 				self.mode = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "name")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.name = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "gender")) {
-				
+
 				ETP_Gender enumRepresentation = ETP_Gender_enumFromString(elementString);
 				self.gender = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "birthday")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.birthday = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "street")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.street = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "street2")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.street2 = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "zip")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.zip = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "city")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.city = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "state")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.state = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "countryCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.countryCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "email")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.email = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "phone")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.phone = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -8703,7 +8706,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -8748,7 +8751,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		billing = 0;
 		shipping = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -8761,7 +8764,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(industrySpecific != nil) [industrySpecific release];
 	if(billing != nil) [billing release];
 	if(shipping != nil) [shipping release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -8780,20 +8783,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.clientIP != 0) {
 		xmlAddChild(node, [self.clientIP xmlNodeForDoc:node->doc elementName:@"clientIP" elementNSPrefix:nil]);
 	}
@@ -8828,16 +8831,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Order *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Order *newObject = [[ETP_Order new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -8845,253 +8848,253 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "clientIP")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.clientIP = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "description")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.description = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "userField")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.userField = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "shoppingCart")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_ShoppingCart class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.shoppingCart = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "industrySpecific")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_IndustrySpecific class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.industrySpecific = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "billing")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Address class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.billing = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "shipping")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Address class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.shipping = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -9101,7 +9104,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -9140,14 +9143,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [super init])) {
 		amount = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	[soapSigner release];
 	if(amount != nil) [amount release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -9166,20 +9169,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.amount != 0) {
 		xmlAddChild(node, [self.amount xmlNodeForDoc:node->doc elementName:@"amount" elementNSPrefix:nil]);
 	}
@@ -9190,16 +9193,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Callback *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Callback *newObject = [[ETP_Callback new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -9207,55 +9210,55 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.amount = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -9265,7 +9268,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -9303,13 +9306,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [super init])) {
 		cancel = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(cancel != nil) [cancel release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -9331,22 +9334,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:CallbackPAYPAL");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.cancel != 0) {
 		xmlAddChild(node, [self.cancel xmlNodeForDoc:node->doc elementName:@"cancel" elementNSPrefix:nil]);
 	}
@@ -9357,16 +9360,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_CallbackPAYPAL *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_CallbackPAYPAL *newObject = [[ETP_CallbackPAYPAL new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -9375,56 +9378,56 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "cancel")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.cancel = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -9434,7 +9437,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -9472,13 +9475,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [super init])) {
 		cancel = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(cancel != nil) [cancel release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -9500,22 +9503,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:CallbackMASTERPASS");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.cancel != 0) {
 		xmlAddChild(node, [self.cancel xmlNodeForDoc:node->doc elementName:@"cancel" elementNSPrefix:nil]);
 	}
@@ -9526,16 +9529,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_CallbackMASTERPASS *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_CallbackMASTERPASS *newObject = [[ETP_CallbackMASTERPASS new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -9544,56 +9547,56 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "cancel")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.cancel = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -9603,7 +9606,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -9644,7 +9647,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		amount = 0;
 		order = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -9653,7 +9656,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(mpayTID != nil) [mpayTID release];
 	if(amount != nil) [amount release];
 	if(order != nil) [order release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -9672,20 +9675,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.mpayTID != 0) {
 		xmlAddChild(node, [self.mpayTID xmlNodeForDoc:node->doc elementName:@"mpayTID" elementNSPrefix:nil]);
 	}
@@ -9704,16 +9707,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ClearingDetails *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ClearingDetails *newObject = [[ETP_ClearingDetails new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -9721,121 +9724,121 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.amount = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "order")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Order class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.order = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -9845,7 +9848,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -9887,7 +9890,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		stateID = 0;
 		tid = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -9896,7 +9899,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(mpayTID != nil) [mpayTID release];
 	if(stateID != nil) [stateID release];
 	if(tid != nil) [tid release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -9915,20 +9918,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.mpayTID != 0) {
 		xmlAddChild(node, [self.mpayTID xmlNodeForDoc:node->doc elementName:@"mpayTID" elementNSPrefix:nil]);
 	}
@@ -9951,16 +9954,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Transaction *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Transaction *newObject = [[ETP_Transaction new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -9968,126 +9971,126 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "tStatus")) {
-				
+
 				ETP_TStatus enumRepresentation = ETP_TStatus_enumFromString(elementString);
 				self.tStatus = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "stateID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.stateID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "tid")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.tid = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -10097,7 +10100,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -10140,7 +10143,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		currency = 0;
 		bifStatus = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -10150,7 +10153,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(amount != nil) [amount release];
 	if(currency != nil) [currency release];
 	if(bifStatus != nil) [bifStatus release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -10172,22 +10175,22 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	xmlNodePtr root = xmlDocGetRootElement(doc);
 	xmlNsPtr xsi = xmlSearchNs(doc, root, (const xmlChar*)"xsi");
 	xmlSetNsProp(node, xsi, (const xmlChar*)"type", (const xmlChar*)"etp:TransactionDetails");
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
 	[super addAttributesToNode:node];
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
 	[super addElementsToNode:node];
-	
+
 	if(self.orderDescription != 0) {
 		xmlAddChild(node, [self.orderDescription xmlNodeForDoc:node->doc elementName:@"orderDescription" elementNSPrefix:nil]);
 	}
@@ -10218,16 +10221,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_TransactionDetails *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_TransactionDetails *newObject = [[ETP_TransactionDetails new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -10236,193 +10239,193 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
+
 	[super deserializeElementsFromNode:cur];
-	
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "orderDescription")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.orderDescription = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pType")) {
-				
+
 				ETP_PaymentType enumRepresentation = ETP_PaymentType_enumFromString(elementString);
 				self.pType = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.amount = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "currency")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.currency = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "bifStatus")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.bifStatus = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -10432,7 +10435,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -10472,7 +10475,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		name = 0;
 		value = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -10480,7 +10483,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(name != nil) [name release];
 	if(value != nil) [value release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -10499,20 +10502,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.name != 0) {
 		xmlAddChild(node, [self.name xmlNodeForDoc:node->doc elementName:@"name" elementNSPrefix:nil]);
 	}
@@ -10527,16 +10530,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Parameter *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Parameter *newObject = [[ETP_Parameter new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -10544,88 +10547,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "name")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.name = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "value")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.value = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -10635,7 +10638,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -10682,7 +10685,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		errText = 0;
 		profileStatus = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -10696,7 +10699,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errNo != nil) [errNo release];
 	if(errText != nil) [errText release];
 	if(profileStatus != nil) [profileStatus release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -10715,20 +10718,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.stateID != 0) {
 		xmlAddChild(node, [self.stateID xmlNodeForDoc:node->doc elementName:@"stateID" elementNSPrefix:nil]);
 	}
@@ -10771,16 +10774,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_HistoryEntry *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_HistoryEntry *newObject = [[ETP_HistoryEntry new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -10788,291 +10791,291 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "stateID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.stateID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "parentStateID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.parentStateID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "txState")) {
-				
+
 				ETP_TxState enumRepresentation = ETP_TxState_enumFromString(elementString);
 				self.txState = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.amount = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "timeStamp")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.timeStamp = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "approvalCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.approvalCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errNo")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errNo = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errText")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errText = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "profileStatus")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.profileStatus = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -11082,7 +11085,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -11125,7 +11128,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		url = 0;
 		result = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -11134,7 +11137,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(timeStamp != nil) [timeStamp release];
 	if(url != nil) [url release];
 	if(result != nil) [result release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -11153,20 +11156,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_ConfirmationStatus_stringFromEnum(self.status) xmlString]);
 	}
@@ -11193,16 +11196,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Confirmation *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Confirmation *newObject = [[ETP_Confirmation new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -11210,131 +11213,131 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_ConfirmationStatus enumRepresentation = ETP_ConfirmationStatus_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "confirmed")) {
-				
+
 				ETP_Confirmed enumRepresentation = ETP_Confirmed_enumFromString(elementString);
 				self.confirmed = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "timeStamp")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.timeStamp = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "url")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.url = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "result")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.result = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -11344,7 +11347,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -11386,7 +11389,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		description = 0;
 		id_ = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -11395,7 +11398,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(brand != nil) [brand release];
 	if(description != nil) [description release];
 	if(id_ != nil) [id_ release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -11414,23 +11417,23 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.id_ != 0) {
 		xmlSetProp(node, (const xmlChar*)"id", [[self.id_ description] xmlString]);
 	}
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.pType != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"pType", [ETP_PaymentType_stringFromEnum(self.pType) xmlString]);
 	}
@@ -11450,24 +11453,24 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
 	[attributes setObject:self.id_ forKey:@"id"];
-	
+
 	return attributes;
 }
 @synthesize id_;
 + (ETP_PaymentMethod *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentMethod *newObject = [[ETP_PaymentMethod new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
 {
 	xmlChar *attrValue = NULL;
 	NSString *attrString;
-	
+
 	attrValue = xmlGetProp(cur, (const xmlChar *) "id");
 	if(attrValue != NULL) {
 		attrString = [NSString stringWithCString:(char*)attrValue encoding:NSUTF8StringEncoding];
@@ -11477,93 +11480,93 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pType")) {
-				
+
 				ETP_PaymentType enumRepresentation = ETP_PaymentType_enumFromString(elementString);
 				self.pType = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "brand")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.brand = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "description")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.description = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -11573,7 +11576,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -11617,7 +11620,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		expires = 0;
 		address = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -11629,7 +11632,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(identifier != nil) [identifier release];
 	if(expires != nil) [expires release];
 	if(address != nil) [address release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -11648,20 +11651,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.pMethodID != 0) {
 		xmlAddChild(node, [self.pMethodID xmlNodeForDoc:node->doc elementName:@"pMethodID" elementNSPrefix:nil]);
 	}
@@ -11692,16 +11695,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_PaymentProfile *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_PaymentProfile *newObject = [[ETP_PaymentProfile new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -11709,220 +11712,220 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pMethodID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.pMethodID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "profileID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.profileID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "updated")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.updated = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "identifier")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.identifier = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "expires")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.expires = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "address")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Address class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.address = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -11932,7 +11935,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -11973,7 +11976,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		updated = 0;
 		payment = [[NSMutableArray alloc] init];
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -11982,7 +11985,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(customerID != nil) [customerID release];
 	if(updated != nil) [updated release];
 	if(payment != nil) [payment release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -12001,20 +12004,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.customerID != 0) {
 		xmlAddChild(node, [self.customerID xmlNodeForDoc:node->doc elementName:@"customerID" elementNSPrefix:nil]);
 	}
@@ -12039,16 +12042,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_Profile *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_Profile *newObject = [[ETP_Profile new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -12056,121 +12059,121 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "updated")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.updated = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "payment")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_PaymentProfile class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.payment addObject:newChild];
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -12180,7 +12183,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -12220,7 +12223,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		merchantID = 0;
 		mdxi = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -12228,7 +12231,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(merchantID != nil) [merchantID release];
 	if(mdxi != nil) [mdxi release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -12247,20 +12250,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -12275,16 +12278,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_SelectPayment *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_SelectPayment *newObject = [[ETP_SelectPayment new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -12292,88 +12295,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mdxi")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mdxi = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -12383,7 +12386,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -12426,7 +12429,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		errText = 0;
 		location = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -12436,7 +12439,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errNo != nil) [errNo release];
 	if(errText != nil) [errText release];
 	if(location != nil) [location release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -12455,20 +12458,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -12495,16 +12498,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_SelectPaymentResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_SelectPaymentResponse *newObject = [[ETP_SelectPaymentResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -12512,159 +12515,159 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errNo")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errNo = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errText")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errText = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "location")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.location = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -12674,7 +12677,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -12720,7 +12723,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		domain = 0;
 		language = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -12733,7 +12736,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(profileID != nil) [profileID release];
 	if(domain != nil) [domain release];
 	if(language != nil) [language release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -12752,20 +12755,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -12804,16 +12807,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_CreatePaymentToken *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_CreatePaymentToken *newObject = [[ETP_CreatePaymentToken new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -12821,258 +12824,258 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pType")) {
-				
+
 				ETP_PaymentType enumRepresentation = ETP_PaymentType_enumFromString(elementString);
 				self.pType = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "templateSet")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.templateSet = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "style")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.style_ = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "profileID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.profileID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "domain")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.domain = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "language")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.language = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -13082,7 +13085,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -13127,7 +13130,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		errText = 0;
 		location = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -13139,7 +13142,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errNo != nil) [errNo release];
 	if(errText != nil) [errText release];
 	if(location != nil) [location release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -13158,20 +13161,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -13206,16 +13209,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_CreatePaymentTokenResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_CreatePaymentTokenResponse *newObject = [[ETP_CreatePaymentTokenResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -13223,225 +13226,225 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "token")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.token = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "apiKey")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.apiKey = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errNo")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errNo = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errText")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errText = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "location")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.location = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -13451,7 +13454,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -13633,102 +13636,102 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
                 self.merchantID = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [NSNumber class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.amount = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "currency")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [NSString class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.currency = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "order")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [ETP_Order class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.order = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "domain")) {
@@ -14316,102 +14319,102 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
                 self.merchantID = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [NSNumber class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.amount = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "currency")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [NSString class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.currency = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "order")) {
-                
+
                 Class elementClass = nil;
                 xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
                 if(instanceType == NULL) {
                     elementClass = [ETP_Order class];
                 } else {
                     NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-                    
+
                     NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-                    
+
                     NSString *elementClassString = nil;
                     if([elementTypeArray count] > 1) {
                         NSString *prefix = [elementTypeArray objectAtIndex:0];
                         NSString *localName = [elementTypeArray objectAtIndex:1];
-                        
+
                         xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-                        
+
                         NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-                        
+
                         elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
                     } else {
                         elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
                     }
-                    
+
                     elementClass = NSClassFromString(elementClassString);
                     xmlFree(instanceType);
                 }
-                
+
                 id newChild = [elementClass deserializeNode:cur];
-                
+
                 self.order = newChild;
             }
             if(xmlStrEqual(cur->name, (const xmlChar *) "language")) {
@@ -14840,7 +14843,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		confirmationURL = 0;
 		language = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -14857,7 +14860,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errorURL != nil) [errorURL release];
 	if(confirmationURL != nil) [confirmationURL release];
 	if(language != nil) [language release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -14876,20 +14879,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -14944,16 +14947,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_CreateCustomer *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_CreateCustomer *newObject = [[ETP_CreateCustomer new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -14961,390 +14964,390 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "tid")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.tid = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pType")) {
-				
+
 				ETP_PaymentType enumRepresentation = ETP_PaymentType_enumFromString(elementString);
 				self.pType = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "paymentData")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_PaymentData class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.paymentData = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerName")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerName = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "order")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Order class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.order = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "billingAddress")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Address class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.billingAddress = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "successURL")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.successURL = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errorURL")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errorURL = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "confirmationURL")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.confirmationURL = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "language")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.language = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -15354,7 +15357,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -15398,7 +15401,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		errText = 0;
 		location = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -15409,7 +15412,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errNo != nil) [errNo release];
 	if(errText != nil) [errText release];
 	if(location != nil) [location release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -15428,20 +15431,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -15472,16 +15475,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_CreateCustomerResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_CreateCustomerResponse *newObject = [[ETP_CreateCustomerResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -15489,192 +15492,192 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errNo")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errNo = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errText")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errText = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "location")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.location = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -15684,7 +15687,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -15733,7 +15736,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		confirmationURL = 0;
 		language = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -15749,7 +15752,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errorURL != nil) [errorURL release];
 	if(confirmationURL != nil) [confirmationURL release];
 	if(language != nil) [language release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -15768,20 +15771,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -15832,16 +15835,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_AcceptPayment *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_AcceptPayment *newObject = [[ETP_AcceptPayment new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -15849,357 +15852,357 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "tid")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.tid = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pType")) {
-				
+
 				ETP_PaymentType enumRepresentation = ETP_PaymentType_enumFromString(elementString);
 				self.pType = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "payment")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Payment class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.payment = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerName")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerName = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "order")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Order class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.order = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "successURL")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.successURL = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errorURL")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errorURL = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "confirmationURL")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.confirmationURL = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "language")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.language = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -16209,7 +16212,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -16253,7 +16256,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		errText = 0;
 		location = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -16264,7 +16267,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errNo != nil) [errNo release];
 	if(errText != nil) [errText release];
 	if(location != nil) [location release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -16283,20 +16286,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -16327,16 +16330,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_AcceptPaymentResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_AcceptPaymentResponse *newObject = [[ETP_AcceptPaymentResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -16344,192 +16347,192 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errNo")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errNo = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errText")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errText = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "location")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.location = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -16539,7 +16542,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -16581,7 +16584,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		paymentCallback = 0;
 		order = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -16591,7 +16594,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(mpayTID != nil) [mpayTID release];
 	if(paymentCallback != nil) [paymentCallback release];
 	if(order != nil) [order release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -16610,20 +16613,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -16646,16 +16649,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ManualCallback *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ManualCallback *newObject = [[ETP_ManualCallback new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -16663,154 +16666,154 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "paymentCallback")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Callback class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.paymentCallback = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "order")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Order class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.order = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -16820,7 +16823,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -16864,7 +16867,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		errText = 0;
 		location = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -16875,7 +16878,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errNo != nil) [errNo release];
 	if(errText != nil) [errText release];
 	if(location != nil) [location release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -16894,20 +16897,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -16938,16 +16941,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ManualCallbackResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ManualCallbackResponse *newObject = [[ETP_ManualCallbackResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -16955,192 +16958,192 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errNo")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errNo = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errText")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errText = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "location")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.location = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -17150,7 +17153,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -17190,7 +17193,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		merchantID = 0;
 		clearingDetails = [[NSMutableArray alloc] init];
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -17198,7 +17201,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(merchantID != nil) [merchantID release];
 	if(clearingDetails != nil) [clearingDetails release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -17217,20 +17220,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -17251,16 +17254,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ManualClear *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ManualClear *newObject = [[ETP_ManualClear new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -17268,88 +17271,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "clearingDetails")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_ClearingDetails class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.clearingDetails addObject:newChild];
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -17359,7 +17362,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -17400,7 +17403,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		returnCode = 0;
 		transaction = [[NSMutableArray alloc] init];
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -17408,7 +17411,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(returnCode != nil) [returnCode release];
 	if(transaction != nil) [transaction release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -17427,20 +17430,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -17465,16 +17468,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ManualClearResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ManualClearResponse *newObject = [[ETP_ManualClearResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -17482,93 +17485,93 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "transaction")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Transaction class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.transaction addObject:newChild];
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -17578,7 +17581,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -17618,7 +17621,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		merchantID = 0;
 		mpayTID = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -17626,7 +17629,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(merchantID != nil) [merchantID release];
 	if(mpayTID != nil) [mpayTID release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -17645,20 +17648,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -17673,16 +17676,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ManualReverse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ManualReverse *newObject = [[ETP_ManualReverse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -17690,88 +17693,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -17781,7 +17784,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -17822,7 +17825,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		returnCode = 0;
 		transaction = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -17830,7 +17833,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(returnCode != nil) [returnCode release];
 	if(transaction != nil) [transaction release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -17849,20 +17852,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -17881,16 +17884,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ManualReverseResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ManualReverseResponse *newObject = [[ETP_ManualReverseResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -17898,93 +17901,93 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "transaction")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Transaction class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.transaction = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -17994,7 +17997,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -18036,7 +18039,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		stateID = 0;
 		amount = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -18046,7 +18049,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(mpayTID != nil) [mpayTID release];
 	if(stateID != nil) [stateID release];
 	if(amount != nil) [amount release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -18065,20 +18068,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -18101,16 +18104,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ManualCredit *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ManualCredit *newObject = [[ETP_ManualCredit new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -18118,154 +18121,154 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "stateID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.stateID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "amount")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.amount = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -18275,7 +18278,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -18316,7 +18319,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		returnCode = 0;
 		transaction = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -18324,7 +18327,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(returnCode != nil) [returnCode release];
 	if(transaction != nil) [transaction release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -18343,20 +18346,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -18375,16 +18378,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ManualCreditResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ManualCreditResponse *newObject = [[ETP_ManualCreditResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -18392,93 +18395,93 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "transaction")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Transaction class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.transaction = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -18488,7 +18491,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -18535,7 +18538,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		confirmationURL = 0;
 		language = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -18549,7 +18552,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(order != nil) [order release];
 	if(confirmationURL != nil) [confirmationURL release];
 	if(language != nil) [language release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -18568,20 +18571,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -18624,16 +18627,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_AcceptWithdraw *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_AcceptWithdraw *newObject = [[ETP_AcceptWithdraw new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -18641,291 +18644,291 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "tid")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.tid = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pType")) {
-				
+
 				ETP_PaymentType enumRepresentation = ETP_PaymentType_enumFromString(elementString);
 				self.pType = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "withdraw")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Withdraw class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.withdraw = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerName")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerName = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "order")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Order class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.order = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "confirmationURL")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.confirmationURL = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "language")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.language = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -18935,7 +18938,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -18978,7 +18981,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		errNo = 0;
 		errText = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -18988,7 +18991,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(mpayTID != nil) [mpayTID release];
 	if(errNo != nil) [errNo release];
 	if(errText != nil) [errText release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -19007,20 +19010,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -19047,16 +19050,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_AcceptWithdrawResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_AcceptWithdrawResponse *newObject = [[ETP_AcceptWithdrawResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -19064,159 +19067,159 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errNo")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errNo = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errText")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errText = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -19226,7 +19229,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -19267,7 +19270,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		mpayTID = 0;
 		tid = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -19276,7 +19279,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(merchantID != nil) [merchantID release];
 	if(mpayTID != nil) [mpayTID release];
 	if(tid != nil) [tid release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -19295,20 +19298,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -19327,16 +19330,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_TransactionStatus *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_TransactionStatus *newObject = [[ETP_TransactionStatus new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -19344,121 +19347,121 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "tid")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.tid = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -19468,7 +19471,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -19509,7 +19512,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		returnCode = 0;
 		parameter = [[NSMutableArray alloc] init];
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -19517,7 +19520,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(returnCode != nil) [returnCode release];
 	if(parameter != nil) [parameter release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -19536,20 +19539,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -19574,16 +19577,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_TransactionStatusResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_TransactionStatusResponse *newObject = [[ETP_TransactionStatusResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -19591,93 +19594,93 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "parameter")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Parameter class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.parameter addObject:newChild];
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -19687,7 +19690,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -19727,7 +19730,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		merchantID = 0;
 		mpayTID = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -19735,7 +19738,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(merchantID != nil) [merchantID release];
 	if(mpayTID != nil) [mpayTID release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -19754,20 +19757,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -19782,16 +19785,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_TransactionConfirmation *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_TransactionConfirmation *newObject = [[ETP_TransactionConfirmation new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -19799,88 +19802,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -19890,7 +19893,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -19931,7 +19934,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		returnCode = 0;
 		confirmation = [[NSMutableArray alloc] init];
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -19939,7 +19942,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(returnCode != nil) [returnCode release];
 	if(confirmation != nil) [confirmation release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -19958,20 +19961,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -19996,16 +19999,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_TransactionConfirmationResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_TransactionConfirmationResponse *newObject = [[ETP_TransactionConfirmationResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -20013,93 +20016,93 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "confirmation")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Confirmation class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.confirmation addObject:newChild];
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -20109,7 +20112,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -20149,7 +20152,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		merchantID = 0;
 		mpayTID = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -20157,7 +20160,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(merchantID != nil) [merchantID release];
 	if(mpayTID != nil) [mpayTID release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -20176,20 +20179,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -20204,16 +20207,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_TransactionHistory *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_TransactionHistory *newObject = [[ETP_TransactionHistory new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -20221,88 +20224,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mpayTID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mpayTID = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -20312,7 +20315,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -20353,7 +20356,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		returnCode = 0;
 		historyEntry = [[NSMutableArray alloc] init];
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -20361,7 +20364,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(returnCode != nil) [returnCode release];
 	if(historyEntry != nil) [historyEntry release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -20380,20 +20383,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -20418,16 +20421,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_TransactionHistoryResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_TransactionHistoryResponse *newObject = [[ETP_TransactionHistoryResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -20435,93 +20438,93 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "historyEntry")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_HistoryEntry class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.historyEntry addObject:newChild];
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -20531,7 +20534,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -20575,7 +20578,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		sortType = 0;
 		listInProgress = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -20585,7 +20588,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(begin != nil) [begin release];
 	if(size_ != nil) [size_ release];
 	if(listInProgress != nil) [listInProgress release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -20604,20 +20607,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -20648,16 +20651,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ListNotCleared *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ListNotCleared *newObject = [[ETP_ListNotCleared new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -20665,164 +20668,164 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "begin")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.begin = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "size")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.size_ = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "sortField")) {
-				
+
 				ETP_SortField enumRepresentation = ETP_SortField_enumFromString(elementString);
 				self.sortField = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "sortType")) {
-				
+
 				ETP_SortType enumRepresentation = ETP_SortType_enumFromString(elementString);
 				self.sortType = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "listInProgress")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [USBoolean class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.listInProgress = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -20832,7 +20835,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -20874,7 +20877,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		transactionDetails = [[NSMutableArray alloc] init];
 		all = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -20883,7 +20886,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(returnCode != nil) [returnCode release];
 	if(transactionDetails != nil) [transactionDetails release];
 	if(all != nil) [all release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -20902,20 +20905,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -20944,16 +20947,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ListNotClearedResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ListNotClearedResponse *newObject = [[ETP_ListNotClearedResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -20961,126 +20964,126 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "transactionDetails")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_TransactionDetails class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.transactionDetails addObject:newChild];
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "all")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.all = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -21090,7 +21093,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -21130,14 +21133,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		merchantID = 0;
 		pType = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	[soapSigner release];
 	if(merchantID != nil) [merchantID release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -21156,20 +21159,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -21184,16 +21187,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ListPaymentMethods *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ListPaymentMethods *newObject = [[ETP_ListPaymentMethods new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -21201,60 +21204,60 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "pType")) {
-				
+
 				ETP_PaymentType enumRepresentation = ETP_PaymentType_enumFromString(elementString);
 				self.pType = enumRepresentation;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -21264,7 +21267,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -21306,7 +21309,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		paymentMethod = [[NSMutableArray alloc] init];
 		all = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -21315,7 +21318,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(returnCode != nil) [returnCode release];
 	if(paymentMethod != nil) [paymentMethod release];
 	if(all != nil) [all release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -21334,20 +21337,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -21376,16 +21379,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ListPaymentMethodsResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ListPaymentMethodsResponse *newObject = [[ETP_ListPaymentMethodsResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -21393,126 +21396,126 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "paymentMethod")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_PaymentMethod class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.paymentMethod addObject:newChild];
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "all")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.all = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -21522,7 +21525,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -21562,7 +21565,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		merchantID = 0;
 		mdxi = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -21570,7 +21573,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[soapSigner release];
 	if(merchantID != nil) [merchantID release];
 	if(mdxi != nil) [mdxi release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -21589,20 +21592,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -21617,16 +21620,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_CreateProfile *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_CreateProfile *newObject = [[ETP_CreateProfile new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -21634,88 +21637,88 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "mdxi")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.mdxi = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -21725,7 +21728,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -21768,7 +21771,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		errText = 0;
 		location = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -21778,7 +21781,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(errNo != nil) [errNo release];
 	if(errText != nil) [errText release];
 	if(location != nil) [location release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -21797,20 +21800,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -21837,16 +21840,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_CreateProfileResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_CreateProfileResponse *newObject = [[ETP_CreateProfileResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -21854,159 +21857,159 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errNo")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errNo = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "errText")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.errText = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "location")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.location = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -22016,7 +22019,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -22059,7 +22062,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		begin = 0;
 		size_ = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -22070,7 +22073,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(expiredBy != nil) [expiredBy release];
 	if(begin != nil) [begin release];
 	if(size_ != nil) [size_ release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -22089,20 +22092,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -22129,16 +22132,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ListProfiles *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ListProfiles *newObject = [[ETP_ListProfiles new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -22146,187 +22149,187 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "expiredBy")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSDate class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.expiredBy = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "begin")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.begin = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "size")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.size_ = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -22336,7 +22339,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -22378,7 +22381,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		profile = [[NSMutableArray alloc] init];
 		all = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -22387,7 +22390,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(returnCode != nil) [returnCode release];
 	if(profile != nil) [profile release];
 	if(all != nil) [all release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -22406,20 +22409,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -22448,16 +22451,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_ListProfilesResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_ListProfilesResponse *newObject = [[ETP_ListProfilesResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -22465,126 +22468,126 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "profile")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [ETP_Profile class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				if(newChild != nil) [self.profile addObject:newChild];
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "all")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.all = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -22594,7 +22597,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -22635,7 +22638,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		customerID = 0;
 		profileID = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
@@ -22644,7 +22647,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if(merchantID != nil) [merchantID release];
 	if(customerID != nil) [customerID release];
 	if(profileID != nil) [profileID release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -22663,20 +22666,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.merchantID != 0) {
 		xmlAddChild(node, [self.merchantID xmlNodeForDoc:node->doc elementName:@"merchantID" elementNSPrefix:nil]);
 	}
@@ -22695,16 +22698,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_DeleteProfile *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_DeleteProfile *newObject = [[ETP_DeleteProfile new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -22712,121 +22715,121 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "merchantID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSNumber class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.merchantID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "customerID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.customerID = newChild;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "profileID")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.profileID = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -22836,7 +22839,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -22876,14 +22879,14 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		status = 0;
 		returnCode = 0;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	[soapSigner release];
 	if(returnCode != nil) [returnCode release];
-	
+
 	[super dealloc];
 }
 - (NSString *)nsPrefix
@@ -22902,20 +22905,20 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		nodeName = [NSString stringWithFormat:@"%@:%@", @"etp", elName];
 	}
 	xmlNodePtr node = xmlNewDocNode(doc, NULL, [nodeName xmlString], NULL);
-	
+
 	[self addAttributesToNode:node];
-	
+
 	[self addElementsToNode:node];
-	
+
 	return node;
 }
 - (void)addAttributesToNode:(xmlNodePtr)node
 {
-	
+
 }
 - (void)addElementsToNode:(xmlNodePtr)node
 {
-	
+
 	if(self.status != 0) {
 		xmlNewChild(node, NULL, (const xmlChar*)"status", [ETP_Status_stringFromEnum(self.status) xmlString]);
 	}
@@ -22930,16 +22933,16 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 - (NSDictionary *)attributes
 {
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-	
+
 	return attributes;
 }
 + (ETP_DeleteProfileResponse *)deserializeNode:(xmlNodePtr)cur
 {
 	ETP_DeleteProfileResponse *newObject = [[ETP_DeleteProfileResponse new] autorelease];
-	
+
 	[newObject deserializeAttributesFromNode:cur];
 	[newObject deserializeElementsFromNode:cur];
-	
+
 	return newObject;
 }
 - (void)deserializeAttributesFromNode:(xmlNodePtr)cur
@@ -22947,60 +22950,60 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 }
 - (void)deserializeElementsFromNode:(xmlNodePtr)cur
 {
-	
-	
+
+
 	for( cur = cur->children ; cur != NULL ; cur = cur->next ) {
 		if(cur->type == XML_ELEMENT_NODE) {
 			xmlChar *elementText = xmlNodeListGetString(cur->doc, cur->children, 1);
 			NSString *elementString = nil;
-			
+
 			if(elementText != NULL) {
 				elementString = [NSString stringWithCString:(char*)elementText encoding:NSUTF8StringEncoding];
 				[elementString self]; // avoid compiler warning for unused var
 				xmlFree(elementText);
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "status")) {
-				
+
 				ETP_Status enumRepresentation = ETP_Status_enumFromString(elementString);
 				self.status = enumRepresentation;
 			}
 			if(xmlStrEqual(cur->name, (const xmlChar *) "returnCode")) {
-				
+
 				Class elementClass = nil;
 				xmlChar *instanceType = xmlGetNsProp(cur, (const xmlChar *) "type", (const xmlChar *) "http://www.w3.org/2001/XMLSchema-instance");
 				if(instanceType == NULL) {
 					elementClass = [NSString class];
 				} else {
 					NSString *elementTypeString = [NSString stringWithCString:(char*)instanceType encoding:NSUTF8StringEncoding];
-					
+
 					NSArray *elementTypeArray = [elementTypeString componentsSeparatedByString:@":"];
-					
+
 					NSString *elementClassString = nil;
 					if([elementTypeArray count] > 1) {
 						NSString *prefix = [elementTypeArray objectAtIndex:0];
 						NSString *localName = [elementTypeArray objectAtIndex:1];
-						
+
 						xmlNsPtr elementNamespace = xmlSearchNs(cur->doc, cur, [prefix xmlString]);
-						
+
 						NSString *standardPrefix = [[USGlobals sharedInstance].wsdlStandardNamespaces objectForKey:[NSString stringWithCString:(char*)elementNamespace->href encoding:NSUTF8StringEncoding]];
-						
+
 						elementClassString = [NSString stringWithFormat:@"%@_%@", standardPrefix, localName];
 					} else {
 						elementClassString = [elementTypeString stringByReplacingOccurrencesOfString:@":" withString:@"_" options:0 range:NSMakeRange(0, [elementTypeString length])];
 					}
-					
+
 					elementClass = NSClassFromString(elementClassString);
 					xmlFree(instanceType);
 				}
-				
+
 				id newChild = [elementClass deserializeNode:cur];
-				
+
 				self.returnCode = newChild;
 			}
 		}
 	}
 }
-/* NSCoder functions taken from: 
+/* NSCoder functions taken from:
  * http://davedelong.com/blog/2009/04/13/aspect-oriented-programming-objective-c
  */
 - (id) initWithCoder:(NSCoder *)decoder {
@@ -23010,7 +23013,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if ([super respondsToSelector:@selector(initWithCoder:)] && ![self isKindOfClass:[super class]])
 		[super performSelector:@selector(initWithCoder:) withObject:decoder];
 	if (self == nil) { return nil; }
- 
+
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	unsigned int numIvars = 0;
 	Ivar * ivars = class_copyIvarList([self class], &numIvars);
@@ -23077,7 +23080,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		logXMLInOut = NO;
 		synchronousOperationComplete = NO;
 	}
-	
+
 	return self;
 }
 - (id)initWithAddress:(NSString *)anAddress
@@ -23085,7 +23088,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	if((self = [self init])) {
 		self.address = [NSURL URLWithString:anAddress];
 	}
-	
+
 	return self;
 }
 - (NSString *)MIMEType
@@ -23103,10 +23106,10 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 {
 	synchronousOperationComplete = NO;
 	[operation start];
-	
+
 	// Now wait for response
 	NSRunLoop *theRL = [NSRunLoop currentRunLoop];
-	
+
 	while (!synchronousOperationComplete && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]);
 	return operation.response;
 }
@@ -23118,7 +23121,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 {
 	synchronousOperationComplete = YES;
 }
-- (ETPBindingResponse *)SelectPaymentUsingParameters:(ETP_SelectPayment *)aParameters 
+- (ETPBindingResponse *)SelectPaymentUsingParameters:(ETP_SelectPayment *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_SelectPayment*)[ETPBinding_SelectPayment alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23130,7 +23133,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)CreatePaymentTokenUsingParameters:(ETP_CreatePaymentToken *)aParameters 
+- (ETPBindingResponse *)CreatePaymentTokenUsingParameters:(ETP_CreatePaymentToken *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_CreatePaymentToken*)[ETPBinding_CreatePaymentToken alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23178,7 +23181,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)AcceptPaymentUsingParameters:(ETP_AcceptPayment *)aParameters 
+- (ETPBindingResponse *)AcceptPaymentUsingParameters:(ETP_AcceptPayment *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_AcceptPayment*)[ETPBinding_AcceptPayment alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23190,7 +23193,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)ManualCallbackUsingParameters:(ETP_ManualCallback *)aParameters 
+- (ETPBindingResponse *)ManualCallbackUsingParameters:(ETP_ManualCallback *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_ManualCallback*)[ETPBinding_ManualCallback alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23202,7 +23205,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)ManualClearUsingParameters:(ETP_ManualClear *)aParameters 
+- (ETPBindingResponse *)ManualClearUsingParameters:(ETP_ManualClear *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_ManualClear*)[ETPBinding_ManualClear alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23214,7 +23217,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)ManualReverseUsingParameters:(ETP_ManualReverse *)aParameters 
+- (ETPBindingResponse *)ManualReverseUsingParameters:(ETP_ManualReverse *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_ManualReverse*)[ETPBinding_ManualReverse alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23226,7 +23229,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)ManualCreditUsingParameters:(ETP_ManualCredit *)aParameters 
+- (ETPBindingResponse *)ManualCreditUsingParameters:(ETP_ManualCredit *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_ManualCredit*)[ETPBinding_ManualCredit alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23238,7 +23241,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)AcceptWithdrawUsingParameters:(ETP_AcceptWithdraw *)aParameters 
+- (ETPBindingResponse *)AcceptWithdrawUsingParameters:(ETP_AcceptWithdraw *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_AcceptWithdraw*)[ETPBinding_AcceptWithdraw alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23250,7 +23253,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)TransactionStatusUsingParameters:(ETP_TransactionStatus *)aParameters 
+- (ETPBindingResponse *)TransactionStatusUsingParameters:(ETP_TransactionStatus *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_TransactionStatus*)[ETPBinding_TransactionStatus alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23262,7 +23265,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)TransactionConfirmationUsingParameters:(ETP_TransactionConfirmation *)aParameters 
+- (ETPBindingResponse *)TransactionConfirmationUsingParameters:(ETP_TransactionConfirmation *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_TransactionConfirmation*)[ETPBinding_TransactionConfirmation alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23274,7 +23277,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)TransactionHistoryUsingParameters:(ETP_TransactionHistory *)aParameters 
+- (ETPBindingResponse *)TransactionHistoryUsingParameters:(ETP_TransactionHistory *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_TransactionHistory*)[ETPBinding_TransactionHistory alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23286,7 +23289,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)ListNotClearedUsingParameters:(ETP_ListNotCleared *)aParameters 
+- (ETPBindingResponse *)ListNotClearedUsingParameters:(ETP_ListNotCleared *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_ListNotCleared*)[ETPBinding_ListNotCleared alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23298,7 +23301,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)ListPaymentMethodsUsingParameters:(ETP_ListPaymentMethods *)aParameters 
+- (ETPBindingResponse *)ListPaymentMethodsUsingParameters:(ETP_ListPaymentMethods *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_ListPaymentMethods*)[ETPBinding_ListPaymentMethods alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23310,7 +23313,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)CreateProfileUsingParameters:(ETP_CreateProfile *)aParameters 
+- (ETPBindingResponse *)CreateProfileUsingParameters:(ETP_CreateProfile *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_CreateProfile*)[ETPBinding_CreateProfile alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23322,7 +23325,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)ListProfilesUsingParameters:(ETP_ListProfiles *)aParameters 
+- (ETPBindingResponse *)ListProfilesUsingParameters:(ETP_ListProfiles *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_ListProfiles*)[ETPBinding_ListProfiles alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23334,7 +23337,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																							 parameters:aParameters
 																							 ] autorelease]];
 }
-- (ETPBindingResponse *)DeleteProfileUsingParameters:(ETP_DeleteProfile *)aParameters 
+- (ETPBindingResponse *)DeleteProfileUsingParameters:(ETP_DeleteProfile *)aParameters
 {
 	return [self performSynchronousOperation:[[(ETPBinding_DeleteProfile*)[ETPBinding_DeleteProfile alloc] initWithBinding:self delegate:self
 																							parameters:aParameters
@@ -23352,15 +23355,15 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
         NSError * err = [NSError errorWithDomain:@"ETPBindingNULLRequestExcpetion"
                                             code:0
                                         userInfo:nil];
-        
+
         [operation connection:nil didFailWithError:err];
         return;
     }
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.address 
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.address
 																												 cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
 																										 timeoutInterval:self.timeout];
 	NSData *bodyData = [outputBody dataUsingEncoding:NSUTF8StringEncoding];
-	
+
 	if(cookies != nil) {
 		[request setAllHTTPHeaderFields:[NSHTTPCookie requestHeaderFieldsWithCookies:cookies]];
 	}
@@ -23376,13 +23379,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	[request setHTTPMethod: @"POST"];
 	// set version 1.1 - how?
 	[request setHTTPBody: bodyData];
-		
+
 	if(self.logXMLInOut) {
 		NSLog(@"OutputHeaders:\n%@", [request allHTTPHeaderFields]);
 		NSLog(@"OutputBody:\n%@", outputBody);
 	}
 	NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:operation];
-	
+
 	operation.urlConnection = connection;
 	[connection release];
 }
@@ -23413,7 +23416,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 		self.responseData = nil;
 		self.urlConnection = nil;
 	}
-	
+
 	return self;
 }
 - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
@@ -23433,13 +23436,13 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	} else {
 		httpResponse = nil;
 	}
-	
+
 	if(self.binding.logXMLInOut) {
 		NSLog(@"ResponseStatus: %ld\n", (long)[httpResponse statusCode]);
 		NSLog(@"ResponseHeaders:\n%@", [httpResponse allHeaderFields]);
 	}
     NSInteger contentLength = [[[httpResponse allHeaderFields] objectForKey:@"Content-Length"] integerValue];
-	
+
 	if ([urlResponse.MIMEType rangeOfString:[self.binding MIMEType]].length == 0) {
 		if ((self.binding.ignoreEmptyResponse == NO) || (contentLength != 0)) {
 			NSError *error = nil;
@@ -23454,7 +23457,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 																			  httpResponse.URL, NSURLErrorKey,nil];
 				error = [NSError errorWithDomain:@"ETPBindingResponseHTTP" code:1 userInfo:userInfo];
 			}
-				
+
 			[self connection:connection didFailWithError:error];
 		} else {
             [delegate operation:self completedWithResponse:response];
@@ -23484,7 +23487,7 @@ NSString * ETP_Gender_stringFromEnum(ETP_Gender enumValue)
 	delegate = nil;
 	[responseData release];
 	[urlConnection release];
-	
+
 	[super dealloc];
 }
 @end
@@ -23496,25 +23499,25 @@ parameters:(ETP_SelectPayment *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -23525,10 +23528,10 @@ parameters:(ETP_SelectPayment *)aParameters
 		[bodyElements setObject:obj forKey:@"SelectPayment"];
 		[bodyKeys addObject:@"SelectPayment"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"SelectPayment" forOperation:self];
 }
@@ -23538,7 +23541,7 @@ parameters:(ETP_SelectPayment *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -23548,10 +23551,10 @@ parameters:(ETP_SelectPayment *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -23570,10 +23573,10 @@ parameters:(ETP_SelectPayment *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -23582,7 +23585,7 @@ parameters:(ETP_SelectPayment *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -23593,15 +23596,15 @@ parameters:(ETP_SelectPayment *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -23615,25 +23618,25 @@ parameters:(ETP_CreatePaymentToken *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -23644,10 +23647,10 @@ parameters:(ETP_CreatePaymentToken *)aParameters
 		[bodyElements setObject:obj forKey:@"CreatePaymentToken"];
 		[bodyKeys addObject:@"CreatePaymentToken"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"CreatePaymentToken" forOperation:self];
 }
@@ -23657,7 +23660,7 @@ parameters:(ETP_CreatePaymentToken *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -23667,10 +23670,10 @@ parameters:(ETP_CreatePaymentToken *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -23689,10 +23692,10 @@ parameters:(ETP_CreatePaymentToken *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -23701,7 +23704,7 @@ parameters:(ETP_CreatePaymentToken *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -23712,15 +23715,15 @@ parameters:(ETP_CreatePaymentToken *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -23734,25 +23737,25 @@ parameters:(ETP_CreateApplePayToken *)aParameters
     if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
         self.parameters = aParameters;
     }
-    
+
     return self;
 }
 - (void)dealloc
 {
     if(parameters != nil) [parameters release];
-    
+
     [super dealloc];
 }
 - (void)main
 {
     [response autorelease];
     response = [ETPBindingResponse new];
-    
+
     ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-    
+
     NSMutableDictionary *headerElements = nil;
     headerElements = [NSMutableDictionary dictionary];
-    
+
     NSMutableDictionary *bodyElements = nil;
     NSMutableArray *bodyKeys = nil;
     bodyElements = [NSMutableDictionary dictionary];
@@ -23763,10 +23766,10 @@ parameters:(ETP_CreateApplePayToken *)aParameters
         [bodyElements setObject:obj forKey:@"CreateApplePayToken"];
         [bodyKeys addObject:@"CreateApplePayToken"];
     }
-    
+
     NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
     operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-    
+
     [delegate operation:self sentSOAPRequest: operationXMLString];
     [binding sendHTTPCallUsingBody:operationXMLString soapAction:@"CreateApplePayToken" forOperation:self];
 }
@@ -23776,7 +23779,7 @@ parameters:(ETP_CreateApplePayToken *)aParameters
     {
         xmlDocPtr doc;
         xmlNodePtr cur;
-        
+
         if (binding.logXMLInOut) {
             NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
         }
@@ -23786,10 +23789,10 @@ parameters:(ETP_CreateApplePayToken *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
     doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-        
+
         if (doc == NULL) {
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-            
+
             response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
             [delegate operation:self completedWithResponse:response];
         } else {
@@ -23808,10 +23811,10 @@ parameters:(ETP_CreateApplePayToken *)aParameters
             cur = cur->children;
             for( ; cur != NULL ; cur = cur->next) {
                 if(cur->type == XML_ELEMENT_NODE) {
-                    
+
                     if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
                         NSMutableArray *responseBodyParts = [NSMutableArray array];
-                        
+
                         xmlNodePtr bodyNode;
                         for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
                             if(cur->type == XML_ELEMENT_NODE) {
@@ -23831,15 +23834,15 @@ parameters:(ETP_CreateApplePayToken *)aParameters
                                 }
                             }
                         }
-                        
+
                         response.bodyParts = responseBodyParts;
                     }
                 }
             }
-            
+
             xmlFreeDoc(doc);
         }
-        
+
         xmlCleanupParser();
         [delegate operation:self completedWithResponse:response];
     }
@@ -23853,25 +23856,25 @@ parameters:(ETP_CreateGooglePayToken *)aParameters
     if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
         self.parameters = aParameters;
     }
-    
+
     return self;
 }
 - (void)dealloc
 {
     if(parameters != nil) [parameters release];
-    
+
     [super dealloc];
 }
 - (void)main
 {
     [response autorelease];
     response = [ETPBindingResponse new];
-    
+
     ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-    
+
     NSMutableDictionary *headerElements = nil;
     headerElements = [NSMutableDictionary dictionary];
-    
+
     NSMutableDictionary *bodyElements = nil;
     NSMutableArray *bodyKeys = nil;
     bodyElements = [NSMutableDictionary dictionary];
@@ -23882,10 +23885,10 @@ parameters:(ETP_CreateGooglePayToken *)aParameters
         [bodyElements setObject:obj forKey:@"CreateGooglePayToken"];
         [bodyKeys addObject:@"CreateGooglePayToken"];
     }
-    
+
     NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
     operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-    
+
     [delegate operation:self sentSOAPRequest: operationXMLString];
     [binding sendHTTPCallUsingBody:operationXMLString soapAction:@"CreateGooglePayToken" forOperation:self];
 }
@@ -23895,7 +23898,7 @@ parameters:(ETP_CreateGooglePayToken *)aParameters
     {
         xmlDocPtr doc;
         xmlNodePtr cur;
-        
+
         if (binding.logXMLInOut) {
             NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
         }
@@ -23905,10 +23908,10 @@ parameters:(ETP_CreateGooglePayToken *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
     doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-        
+
         if (doc == NULL) {
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-            
+
             response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
             [delegate operation:self completedWithResponse:response];
         } else {
@@ -23927,10 +23930,10 @@ parameters:(ETP_CreateGooglePayToken *)aParameters
             cur = cur->children;
             for( ; cur != NULL ; cur = cur->next) {
                 if(cur->type == XML_ELEMENT_NODE) {
-                    
+
                     if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
                         NSMutableArray *responseBodyParts = [NSMutableArray array];
-                        
+
                         xmlNodePtr bodyNode;
                         for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
                             if(cur->type == XML_ELEMENT_NODE) {
@@ -23950,15 +23953,15 @@ parameters:(ETP_CreateGooglePayToken *)aParameters
                                 }
                             }
                         }
-                        
+
                         response.bodyParts = responseBodyParts;
                     }
                 }
             }
-            
+
             xmlFreeDoc(doc);
         }
-        
+
         xmlCleanupParser();
         [delegate operation:self completedWithResponse:response];
     }
@@ -23972,25 +23975,25 @@ parameters:(ETP_CreateCustomer *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24001,10 +24004,10 @@ parameters:(ETP_CreateCustomer *)aParameters
 		[bodyElements setObject:obj forKey:@"CreateCustomer"];
 		[bodyKeys addObject:@"CreateCustomer"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"CreateCustomer" forOperation:self];
 }
@@ -24014,7 +24017,7 @@ parameters:(ETP_CreateCustomer *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24024,10 +24027,10 @@ parameters:(ETP_CreateCustomer *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24046,10 +24049,10 @@ parameters:(ETP_CreateCustomer *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -24058,7 +24061,7 @@ parameters:(ETP_CreateCustomer *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -24069,15 +24072,15 @@ parameters:(ETP_CreateCustomer *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -24091,25 +24094,25 @@ parameters:(ETP_AcceptPayment *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24120,10 +24123,10 @@ parameters:(ETP_AcceptPayment *)aParameters
 		[bodyElements setObject:obj forKey:@"AcceptPayment"];
 		[bodyKeys addObject:@"AcceptPayment"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"AcceptPayment" forOperation:self];
 }
@@ -24133,7 +24136,7 @@ parameters:(ETP_AcceptPayment *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24143,10 +24146,10 @@ parameters:(ETP_AcceptPayment *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24165,10 +24168,10 @@ parameters:(ETP_AcceptPayment *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -24177,7 +24180,7 @@ parameters:(ETP_AcceptPayment *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -24188,15 +24191,15 @@ parameters:(ETP_AcceptPayment *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -24210,25 +24213,25 @@ parameters:(ETP_ManualCallback *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24239,10 +24242,10 @@ parameters:(ETP_ManualCallback *)aParameters
 		[bodyElements setObject:obj forKey:@"ManualCallback"];
 		[bodyKeys addObject:@"ManualCallback"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"ManualCallback" forOperation:self];
 }
@@ -24252,7 +24255,7 @@ parameters:(ETP_ManualCallback *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24262,10 +24265,10 @@ parameters:(ETP_ManualCallback *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24284,10 +24287,10 @@ parameters:(ETP_ManualCallback *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -24296,7 +24299,7 @@ parameters:(ETP_ManualCallback *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -24307,15 +24310,15 @@ parameters:(ETP_ManualCallback *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -24329,25 +24332,25 @@ parameters:(ETP_ManualClear *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24358,10 +24361,10 @@ parameters:(ETP_ManualClear *)aParameters
 		[bodyElements setObject:obj forKey:@"ManualClear"];
 		[bodyKeys addObject:@"ManualClear"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"ManualClear" forOperation:self];
 }
@@ -24371,7 +24374,7 @@ parameters:(ETP_ManualClear *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24381,10 +24384,10 @@ parameters:(ETP_ManualClear *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24403,10 +24406,10 @@ parameters:(ETP_ManualClear *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -24415,7 +24418,7 @@ parameters:(ETP_ManualClear *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -24426,15 +24429,15 @@ parameters:(ETP_ManualClear *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -24448,25 +24451,25 @@ parameters:(ETP_ManualReverse *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24477,10 +24480,10 @@ parameters:(ETP_ManualReverse *)aParameters
 		[bodyElements setObject:obj forKey:@"ManualReverse"];
 		[bodyKeys addObject:@"ManualReverse"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"ManualReverse" forOperation:self];
 }
@@ -24490,7 +24493,7 @@ parameters:(ETP_ManualReverse *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24500,10 +24503,10 @@ parameters:(ETP_ManualReverse *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24522,10 +24525,10 @@ parameters:(ETP_ManualReverse *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -24534,7 +24537,7 @@ parameters:(ETP_ManualReverse *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -24545,15 +24548,15 @@ parameters:(ETP_ManualReverse *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -24567,25 +24570,25 @@ parameters:(ETP_ManualCredit *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24596,10 +24599,10 @@ parameters:(ETP_ManualCredit *)aParameters
 		[bodyElements setObject:obj forKey:@"ManualCredit"];
 		[bodyKeys addObject:@"ManualCredit"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"ManualCredit" forOperation:self];
 }
@@ -24609,7 +24612,7 @@ parameters:(ETP_ManualCredit *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24619,10 +24622,10 @@ parameters:(ETP_ManualCredit *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24641,10 +24644,10 @@ parameters:(ETP_ManualCredit *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -24653,7 +24656,7 @@ parameters:(ETP_ManualCredit *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -24664,15 +24667,15 @@ parameters:(ETP_ManualCredit *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -24686,25 +24689,25 @@ parameters:(ETP_AcceptWithdraw *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24715,10 +24718,10 @@ parameters:(ETP_AcceptWithdraw *)aParameters
 		[bodyElements setObject:obj forKey:@"AcceptWithdraw"];
 		[bodyKeys addObject:@"AcceptWithdraw"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"AcceptWithdraw" forOperation:self];
 }
@@ -24728,7 +24731,7 @@ parameters:(ETP_AcceptWithdraw *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24738,10 +24741,10 @@ parameters:(ETP_AcceptWithdraw *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24760,10 +24763,10 @@ parameters:(ETP_AcceptWithdraw *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -24772,7 +24775,7 @@ parameters:(ETP_AcceptWithdraw *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -24783,15 +24786,15 @@ parameters:(ETP_AcceptWithdraw *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -24805,25 +24808,25 @@ parameters:(ETP_TransactionStatus *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24834,10 +24837,10 @@ parameters:(ETP_TransactionStatus *)aParameters
 		[bodyElements setObject:obj forKey:@"TransactionStatus"];
 		[bodyKeys addObject:@"TransactionStatus"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"TransactionStatus" forOperation:self];
 }
@@ -24847,7 +24850,7 @@ parameters:(ETP_TransactionStatus *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24857,10 +24860,10 @@ parameters:(ETP_TransactionStatus *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24879,10 +24882,10 @@ parameters:(ETP_TransactionStatus *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -24891,7 +24894,7 @@ parameters:(ETP_TransactionStatus *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -24902,15 +24905,15 @@ parameters:(ETP_TransactionStatus *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -24924,25 +24927,25 @@ parameters:(ETP_TransactionConfirmation *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -24953,10 +24956,10 @@ parameters:(ETP_TransactionConfirmation *)aParameters
 		[bodyElements setObject:obj forKey:@"TransactionConfirmation"];
 		[bodyKeys addObject:@"TransactionConfirmation"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"TransactionConfirmation" forOperation:self];
 }
@@ -24966,7 +24969,7 @@ parameters:(ETP_TransactionConfirmation *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -24976,10 +24979,10 @@ parameters:(ETP_TransactionConfirmation *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -24998,10 +25001,10 @@ parameters:(ETP_TransactionConfirmation *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -25010,7 +25013,7 @@ parameters:(ETP_TransactionConfirmation *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -25021,15 +25024,15 @@ parameters:(ETP_TransactionConfirmation *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -25043,25 +25046,25 @@ parameters:(ETP_TransactionHistory *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -25072,10 +25075,10 @@ parameters:(ETP_TransactionHistory *)aParameters
 		[bodyElements setObject:obj forKey:@"TransactionHistory"];
 		[bodyKeys addObject:@"TransactionHistory"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"TransactionHistory" forOperation:self];
 }
@@ -25085,7 +25088,7 @@ parameters:(ETP_TransactionHistory *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -25095,10 +25098,10 @@ parameters:(ETP_TransactionHistory *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -25117,10 +25120,10 @@ parameters:(ETP_TransactionHistory *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -25129,7 +25132,7 @@ parameters:(ETP_TransactionHistory *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -25140,15 +25143,15 @@ parameters:(ETP_TransactionHistory *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -25162,25 +25165,25 @@ parameters:(ETP_ListNotCleared *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -25191,10 +25194,10 @@ parameters:(ETP_ListNotCleared *)aParameters
 		[bodyElements setObject:obj forKey:@"ListNotCleared"];
 		[bodyKeys addObject:@"ListNotCleared"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"ListNotCleared" forOperation:self];
 }
@@ -25204,7 +25207,7 @@ parameters:(ETP_ListNotCleared *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -25214,10 +25217,10 @@ parameters:(ETP_ListNotCleared *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -25236,10 +25239,10 @@ parameters:(ETP_ListNotCleared *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -25248,7 +25251,7 @@ parameters:(ETP_ListNotCleared *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -25259,15 +25262,15 @@ parameters:(ETP_ListNotCleared *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -25281,25 +25284,25 @@ parameters:(ETP_ListPaymentMethods *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -25310,10 +25313,10 @@ parameters:(ETP_ListPaymentMethods *)aParameters
 		[bodyElements setObject:obj forKey:@"ListPaymentMethods"];
 		[bodyKeys addObject:@"ListPaymentMethods"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"ListPaymentMethods" forOperation:self];
 }
@@ -25323,7 +25326,7 @@ parameters:(ETP_ListPaymentMethods *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -25333,10 +25336,10 @@ parameters:(ETP_ListPaymentMethods *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -25355,10 +25358,10 @@ parameters:(ETP_ListPaymentMethods *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -25367,7 +25370,7 @@ parameters:(ETP_ListPaymentMethods *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -25378,15 +25381,15 @@ parameters:(ETP_ListPaymentMethods *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -25400,25 +25403,25 @@ parameters:(ETP_CreateProfile *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -25429,10 +25432,10 @@ parameters:(ETP_CreateProfile *)aParameters
 		[bodyElements setObject:obj forKey:@"CreateProfile"];
 		[bodyKeys addObject:@"CreateProfile"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"CreateProfile" forOperation:self];
 }
@@ -25442,7 +25445,7 @@ parameters:(ETP_CreateProfile *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -25452,10 +25455,10 @@ parameters:(ETP_CreateProfile *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -25474,10 +25477,10 @@ parameters:(ETP_CreateProfile *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -25486,7 +25489,7 @@ parameters:(ETP_CreateProfile *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -25497,15 +25500,15 @@ parameters:(ETP_CreateProfile *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -25519,25 +25522,25 @@ parameters:(ETP_ListProfiles *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -25548,10 +25551,10 @@ parameters:(ETP_ListProfiles *)aParameters
 		[bodyElements setObject:obj forKey:@"ListProfiles"];
 		[bodyKeys addObject:@"ListProfiles"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"ListProfiles" forOperation:self];
 }
@@ -25561,7 +25564,7 @@ parameters:(ETP_ListProfiles *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -25571,10 +25574,10 @@ parameters:(ETP_ListProfiles *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -25593,10 +25596,10 @@ parameters:(ETP_ListProfiles *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -25605,7 +25608,7 @@ parameters:(ETP_ListProfiles *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -25616,15 +25619,15 @@ parameters:(ETP_ListProfiles *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -25638,25 +25641,25 @@ parameters:(ETP_DeleteProfile *)aParameters
 	if((self = [super initWithBinding:aBinding delegate:responseDelegate])) {
 		self.parameters = aParameters;
 	}
-	
+
 	return self;
 }
 - (void)dealloc
 {
 	if(parameters != nil) [parameters release];
-	
+
 	[super dealloc];
 }
 - (void)main
 {
 	[response autorelease];
 	response = [ETPBindingResponse new];
-	
+
 	ETPBinding_envelope *envelope = [ETPBinding_envelope sharedInstance];
-	
+
 	NSMutableDictionary *headerElements = nil;
 	headerElements = [NSMutableDictionary dictionary];
-	
+
 	NSMutableDictionary *bodyElements = nil;
 	NSMutableArray *bodyKeys = nil;
 	bodyElements = [NSMutableDictionary dictionary];
@@ -25667,10 +25670,10 @@ parameters:(ETP_DeleteProfile *)aParameters
 		[bodyElements setObject:obj forKey:@"DeleteProfile"];
 		[bodyKeys addObject:@"DeleteProfile"];
 	}
-	
+
 	NSString *operationXMLString = [envelope serializedFormUsingHeaderElements:headerElements bodyElements:bodyElements bodyKeys:bodyKeys];
 	operationXMLString = binding.soapSigner ? [binding.soapSigner signRequest:operationXMLString] : operationXMLString;
-	
+
 	[delegate operation:self sentSOAPRequest: operationXMLString];
 	[binding sendHTTPCallUsingBody:operationXMLString soapAction:@"DeleteProfile" forOperation:self];
 }
@@ -25680,7 +25683,7 @@ parameters:(ETP_DeleteProfile *)aParameters
 	{
 		xmlDocPtr doc;
 		xmlNodePtr cur;
-		
+
 		if (binding.logXMLInOut) {
 			NSLog(@"ResponseBody:\n%@", [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease]);
 		}
@@ -25690,10 +25693,10 @@ parameters:(ETP_DeleteProfile *)aParameters
 #endif
     // EricBe: Put explicit conversion since [responseData length] is NSInteger but xmlReadMemory wants int.
 	doc = xmlReadMemory([responseData bytes], (int) [responseData length], NULL, NULL, XML_PARSE_COMPACT | XML_PARSE_NOBLANKS);
-		
+
 		if (doc == NULL) {
 			NSDictionary *userInfo = [NSDictionary dictionaryWithObject:@"Errors while parsing returned XML" forKey:NSLocalizedDescriptionKey];
-			
+
 			response.error = [NSError errorWithDomain:@"ETPBindingResponseXML" code:1 userInfo:userInfo];
 			[delegate operation:self completedWithResponse:response];
 		} else {
@@ -25712,10 +25715,10 @@ parameters:(ETP_DeleteProfile *)aParameters
 			cur = cur->children;
 			for( ; cur != NULL ; cur = cur->next) {
 				if(cur->type == XML_ELEMENT_NODE) {
-					
+
 					if(xmlStrEqual(cur->name, (const xmlChar *) "Body")) {
 						NSMutableArray *responseBodyParts = [NSMutableArray array];
-						
+
 						xmlNodePtr bodyNode;
 						for(bodyNode=cur->children ; bodyNode != NULL ; bodyNode = bodyNode->next) {
 							if(cur->type == XML_ELEMENT_NODE) {
@@ -25724,7 +25727,7 @@ parameters:(ETP_DeleteProfile *)aParameters
 									//NSAssert1(bodyObject != nil, @"Errors while parsing body %s", bodyNode->name);
 									if (bodyObject != nil) [responseBodyParts addObject:bodyObject];
 								}
-								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) && 
+								if ((bodyNode->ns != nil && xmlStrEqual(bodyNode->ns->prefix, cur->ns->prefix)) &&
 									xmlStrEqual(bodyNode->name, (const xmlChar *) "Fault")) {
                                     NSDictionary *exceptions = [NSDictionary dictionaryWithObjectsAndKeys:
 																@"ETP_Fault", @"Fault", // Added only to avoid xcode warnings
@@ -25735,15 +25738,15 @@ parameters:(ETP_DeleteProfile *)aParameters
 								}
 							}
 						}
-						
+
 						response.bodyParts = responseBodyParts;
 					}
 				}
 			}
-			
+
 			xmlFreeDoc(doc);
 		}
-		
+
 		xmlCleanupParser();
 		[delegate operation:self completedWithResponse:response];
 	}
@@ -25756,56 +25759,56 @@ static ETPBinding_envelope *ETPBindingSharedEnvelopeInstance = nil;
 	if(ETPBindingSharedEnvelopeInstance == nil) {
 		ETPBindingSharedEnvelopeInstance = [ETPBinding_envelope new];
 	}
-	
+
 	return ETPBindingSharedEnvelopeInstance;
 }
 - (NSString *)serializedFormUsingHeaderElements:(NSDictionary *)headerElements bodyElements:(NSDictionary *)bodyElements bodyKeys:(NSArray *)bodyKeys
 {
 	xmlDocPtr doc;
-	
+
 	doc = xmlNewDoc((const xmlChar*)XML_DEFAULT_VERSION);
 	if (doc == NULL) {
 		NSLog(@"Error creating the xml document tree");
 		return @"";
 	}
-	
+
 	xmlNodePtr root = xmlNewDocNode(doc, NULL, (const xmlChar*)"Envelope", NULL);
 	xmlDocSetRootElement(doc, root);
-	
+
 	xmlNsPtr soapEnvelopeNs = xmlNewNs(root, (const xmlChar*)"http://schemas.xmlsoap.org/soap/envelope/", (const xmlChar*)"soap");
 	xmlSetNs(root, soapEnvelopeNs);
-	
+
 	xmlNewNs(root, (const xmlChar*)"http://www.w3.org/2001/XMLSchema-instance", (const xmlChar*)"xsi");
     xmlNewNs(root, (const xmlChar*)"https://www.mpay24.com/soap/etp/1.5/ETP.wsdl", (const xmlChar*)"etp");
-	
+
 	if((headerElements != nil) && ([headerElements count] > 0)) {
 		xmlNodePtr headerNode = xmlNewDocNode(doc, soapEnvelopeNs, (const xmlChar*)"Header", NULL);
 		xmlAddChild(root, headerNode);
-		
+
 		for(NSString *key in [headerElements allKeys]) {
 			id header = [headerElements objectForKey:key];
 			xmlAddChild(headerNode, [header xmlNodeForDoc:doc elementName:key elementNSPrefix:nil]);
 		}
 	}
-	
+
 	if((bodyElements != nil) && ([bodyElements count] > 0)) {
 		xmlNodePtr bodyNode = xmlNewDocNode(doc, soapEnvelopeNs, (const xmlChar*)"Body", NULL);
 		xmlAddChild(root, bodyNode);
-		
+
 		for(NSString *key in bodyKeys) {
 			id body = [bodyElements objectForKey:key];
 			xmlAddChild(bodyNode, [body xmlNodeForDoc:doc elementName:key elementNSPrefix:nil]);
 		}
 	}
-	
+
 	xmlChar *buf;
 	int size;
 	xmlDocDumpFormatMemory(doc, &buf, &size, 1);
-	
+
 	NSString *serializedForm = [NSString stringWithCString:(const char*)buf encoding:NSUTF8StringEncoding];
 	xmlFree(buf);
-	
-	xmlFreeDoc(doc);	
+
+	xmlFreeDoc(doc);
 	return serializedForm;
 }
 @end
@@ -25820,13 +25823,13 @@ static ETPBinding_envelope *ETPBindingSharedEnvelopeInstance = nil;
 		bodyParts = nil;
 		error = nil;
 	}
-	
+
 	return self;
 }
 - (void)dealloc {
 	self.headers = nil;
 	self.bodyParts = nil;
-	self.error = nil;	
+	self.error = nil;
 	[super dealloc];
 }
 @end

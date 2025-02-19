@@ -126,6 +126,7 @@ typedef enum {
 	ETP_PaymentType_WECHATPAY,
     ETP_PaymentType_PREPAYMENT,
     ETP_PaymentType_TWINT,
+    ETP_PaymentType_OPENBANKING,
 	ETP_PaymentType_TOKEN,
 	ETP_PaymentType_PROFILE,
 } ETP_PaymentType;
@@ -2264,7 +2265,7 @@ SOAPSigner *soapSigner;
 #import "ETP.h"
 @class ETPBinding;
 @interface ETP : NSObject {
-	
+
 }
 + (ETPBinding *)ETPBinding;
 @end
