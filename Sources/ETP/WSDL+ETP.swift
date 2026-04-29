@@ -127,8 +127,10 @@ public struct ETP: WSDLService {
         case PSC
         case CASH_TICKET
         case ELV
+        case QUICK
         case GIROPAY
         case PAYPAL
+        case MPASS
         case BILLPAY
         case INVOICE
         case HP
@@ -143,6 +145,7 @@ public struct ETP: WSDLService {
         case WECHATPAY
         case PREPAYMENT
         case TWINT
+        case OPENBANKING
         case TOKEN
         case PROFILE
         public var description: String { rawValue }
@@ -695,7 +698,7 @@ public struct ETP: WSDLService {
         }
     }
     
-    /// Paybox specific payment parameters
+    /// Paybox specific payment parameters (deprecated)
     public struct PaymentPB: Codable, DynamicNodeEncoding, PaymentProtocol {
         private var xsiType: String? = "etp:PaymentPB"
         // properties inherited from PaymentProtocol
@@ -1218,7 +1221,7 @@ public struct ETP: WSDLService {
         }
     }
     
-    /// Paybox specific profile payment parameters
+    /// Paybox specific profile payment parameters (deprecated)
     public struct ProfilePaymentPB: Codable, DynamicNodeEncoding, PaymentProtocol {
         private var xsiType: String? = "etp:ProfilePaymentPB"
         // properties inherited from PaymentProtocol
