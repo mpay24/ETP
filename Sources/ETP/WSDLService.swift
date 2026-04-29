@@ -15,6 +15,7 @@ public extension WSDLService {
     func operation<Request: Codable, Response: Codable>(_ request: Request) async throws -> Response {
         guard let url = URL(string: endpoint) else { throw WSDLOperationError.invalidEndpoint}
         let encoder = XMLEncoder()
+        encoder.dateEncodingStrategy = .iso8601
         let requestEnvelope = SOAPEnvelope<Request>(body: request)
         let encoded = try encoder.encode(requestEnvelope, withRootKey: "soap:Envelope", rootAttributes: [
             "xmlns:soap": "http://schemas.xmlsoap.org/soap/envelope/",
