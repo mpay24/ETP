@@ -13,11 +13,26 @@ import Testing
 
 struct SerializeTests {
     
+    let encoder = XMLEncoder()
     let decoder = XMLDecoder()
     
     init () async throws {
+        encoder.dateEncodingStrategy = .iso8601
         decoder.dateDecodingStrategy = .iso8601
         decoder.shouldProcessNamespaces = true
+    }
+    
+    func encode<Request: Codable>(_ request: Request) -> String? {
+        let requestEnvelope = SOAPEnvelope<Request>(body: request)
+        if let res = try? encoder.encode(requestEnvelope, withRootKey: "soap:Envelope", rootAttributes: [
+            "xmlns:soap": "http://schemas.xmlsoap.org/soap/envelope/",
+            "xmlns:etp": "etp",
+            "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+            "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        ]) {
+            return String(data: res, encoding: .utf8)
+        }
+        return nil
     }
     
     func decode<Response: Codable>(_ xml: String) -> Response? {
