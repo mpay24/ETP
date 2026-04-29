@@ -18,7 +18,7 @@ public extension WSDLService {
         let requestEnvelope = SOAPEnvelope<Request>(body: request)
         let encoded = try encoder.encode(requestEnvelope, withRootKey: "soap:Envelope", rootAttributes: [
             "xmlns:soap": "http://schemas.xmlsoap.org/soap/envelope/",
-            "xmlns:tns": targetNamespace,
+            "xmlns:etp": targetNamespace,
             "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
             "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
         ])
@@ -67,12 +67,12 @@ public enum Authentication {
         return request
     }
 }
-                              
+
 public enum CharacterSet {
     case unspecified
     case manual( String )
     case utf8
-    
+
     var specifier: String {
         switch self{
         case .unspecified: ""
@@ -84,7 +84,7 @@ public enum CharacterSet {
 
 struct SOAPEnvelope<Body: Codable>: Codable {
     var body: Body
-    
+
     struct CodingKeys: CodingKey {
         var stringValue: String
         var intValue: Int?
@@ -102,12 +102,12 @@ struct SOAPEnvelope<Body: Codable>: Codable {
         let bodyContainer = try envelope.nestedContainer(keyedBy: CodingKeys.self, forKey: bodyContainerKey)
         self.body = try bodyContainer.decode(Body.self, forKey: CodingKeys(stringValue: String(describing: Body.self))!)
     }
-    
+
     public func encode(to encoder: any Encoder) throws {
         var envelope = encoder.container(keyedBy: CodingKeys.self)
         let bodyContainerKey = CodingKeys(stringValue: "soap:Body")
         var bodyContainer = envelope.nestedContainer(keyedBy: CodingKeys.self, forKey: bodyContainerKey!)
-        try bodyContainer.encode(body, forKey: CodingKeys(stringValue: "tns:\(String(describing: Body.self))")!)
+        try bodyContainer.encode(body, forKey: CodingKeys(stringValue: "etp:\(String(describing: Body.self))")!)
     }
 }
 
