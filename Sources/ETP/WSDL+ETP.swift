@@ -1,10 +1,8 @@
 import Foundation
 import XMLCoder
 
-public struct ETP: WSDLService {
+public struct ETP {
     public var endpoint = "https://www.mpay24.com/app/bin/etpproxy_v15"
-    public var targetNamespace = "https://www.mpay24.com/soap/etp/1.5/ETP.wsdl"
-    public var targetNamespacePrefix = "etp"
     public var authentication: Authentication = .none
     public var characterSet: CharacterSet = .unspecified
     public var soapRequest: ((_ request: String) -> Void)?
@@ -12,6 +10,120 @@ public struct ETP: WSDLService {
     public init(_ domain: String? = nil) {
         if let domain {
             self.endpoint = "\(domain)/app/bin/etpproxy_v15"
+        }
+    }
+    
+    public enum Authentication {
+        case none
+        case basic( username: String, password: String )
+
+        public func createRequest(with url: URL) -> URLRequest {
+            var request = URLRequest(url: url)
+            switch self {
+            case .basic(username: let username, password: let password):
+                let loginString = String(format: "%@:%@", username, password)
+                let loginData = loginString.data(using: String.Encoding.utf8)!
+                let basicAuthorization = loginData.base64EncodedString()
+                request.addValue("Basic \(basicAuthorization)", forHTTPHeaderField: "Authorization")
+            case .none: break
+            }
+            return request
+        }
+    }
+
+    public enum CharacterSet {
+        case unspecified
+        case manual( String )
+        case utf8
+
+        var specifier: String {
+            switch self{
+            case .unspecified: ""
+            case .manual( let mimeName ): ";charset=\(mimeName)"
+            case .utf8: ";charset=utf-8"
+            }
+        }
+    }
+
+    struct SOAPEnvelope<Body: Codable>: Codable {
+        var body: Body
+
+        struct CodingKeys: CodingKey {
+            var stringValue: String
+            var intValue: Int?
+            init?(stringValue: String) { self.stringValue = stringValue }
+            init?(intValue: Int) { nil }
+        }
+
+        public init(body: Body) {
+            self.body = body
+        }
+
+        public init(from decoder: Decoder) throws {
+            let envelope = try decoder.container(keyedBy: CodingKeys.self)
+            let bodyContainerKey = CodingKeys(stringValue: "Body")!
+            let bodyContainer = try envelope.nestedContainer(keyedBy: CodingKeys.self, forKey: bodyContainerKey)
+            self.body = try bodyContainer.decode(Body.self, forKey: CodingKeys(stringValue: String(describing: Body.self))!)
+        }
+
+        public func encode(to encoder: any Encoder) throws {
+            var envelope = encoder.container(keyedBy: CodingKeys.self)
+            let bodyContainerKey = CodingKeys(stringValue: "soap:Body")
+            var bodyContainer = envelope.nestedContainer(keyedBy: CodingKeys.self, forKey: bodyContainerKey!)
+            try bodyContainer.encode(body, forKey: CodingKeys(stringValue: "etp:\(String(describing: Body.self))")!)
+        }
+    }
+
+    public struct Fault: Codable {
+        public var faultcode: String
+        public var faultstring: String
+        public var faultactor: String?
+        public var detail: String?
+    }
+
+    public enum WSDLOperationError: Error {
+        case unauhtenticated
+        case invalidEndpoint
+        case invalidHTTPResponse(URLResponse)
+        case invalidResponseXML
+        case soapFault(Fault)
+    }
+
+    func operation<Request: Codable, Response: Codable>(_ request: Request) async throws -> Response {
+        guard let url = URL(string: endpoint) else { throw WSDLOperationError.invalidEndpoint}
+        let encoder = XMLEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        let requestEnvelope = SOAPEnvelope<Request>(body: request)
+        let encoded = try encoder.encode(requestEnvelope, withRootKey: "soap:Envelope", rootAttributes: [
+            "xmlns:soap": "http://schemas.xmlsoap.org/soap/envelope/",
+            "xmlns:etp": "https://www.mpay24.com/soap/etp/1.5/ETP.wsdl",
+            "xmlns:xsd": "http://www.w3.org/2001/XMLSchema",
+            "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        ])
+        let soapRequest = try XMLDocument(data: encoded)
+        self.soapRequest?(soapRequest.xmlString(options: .nodePrettyPrint))
+        var request = authentication.createRequest(with: url)
+        request.addValue("text/xml\(characterSet.specifier)", forHTTPHeaderField: "Content-Type")
+        request.addValue("WSDL2Swift", forHTTPHeaderField: "User-Agent")
+        request.httpMethod = "POST"
+        request.httpBody = soapRequest.xmlData
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        let decoder = XMLDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        decoder.shouldProcessNamespaces = true
+
+        switch (response as? HTTPURLResponse)?.statusCode {
+        case 200:
+            guard let doc = try? XMLDocument(data: data) else { throw WSDLOperationError.invalidResponseXML }
+            self.soapResponse?(doc.xmlString(options: .nodePrettyPrint))
+            return try decoder.decode(SOAPEnvelope<Response>.self, from: data).body
+        case 401:
+            throw WSDLOperationError.unauhtenticated
+        case 500:
+            throw WSDLOperationError.soapFault(try decoder.decode(SOAPEnvelope<Fault>.self, from: data).body)
+        default:
+            throw WSDLOperationError.invalidHTTPResponse(response)
         }
     }
     
@@ -111,14 +223,14 @@ public struct ETP: WSDLService {
     }
     
     /// Operation status
-    public enum Status: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum Status: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case OK
         case ERROR
         public var description: String { rawValue }
     }
     
     /// Possible payment systems
-    public enum PaymentType: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum PaymentType: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case CC
         case CB
         case MAESTRO
@@ -152,7 +264,7 @@ public struct ETP: WSDLService {
     }
     
     /// Transaction states
-    public enum TxState: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum TxState: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case INIT
         case CREATED
         case AUTHORIZE
@@ -176,7 +288,7 @@ public struct ETP: WSDLService {
     }
     
     /// Transaction status
-    public enum TStatus: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum TStatus: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case NOTFOUND
         case FAILED
         case RESERVED
@@ -187,7 +299,7 @@ public struct ETP: WSDLService {
     }
     
     /// Status of the confirmation-url call
-    public enum ConfirmationStatus: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum ConfirmationStatus: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case OK
         case ERROR
         case PENDING
@@ -196,7 +308,7 @@ public struct ETP: WSDLService {
     }
     
     /// Transaction status confirmed on the confirmation-url call
-    public enum Confirmed: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum Confirmed: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case VALIDATED
         case RESERVED
         case RESERVED_REVERSAL
@@ -212,7 +324,7 @@ public struct ETP: WSDLService {
     }
     
     /// Transaction field to be used for sorting
-    public enum SortField: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum SortField: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case MPAYTID
         case PTYPE
         case BRAND
@@ -226,21 +338,21 @@ public struct ETP: WSDLService {
     }
     
     /// Sort type to be used
-    public enum SortType: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum SortType: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case ASC
         case DESC
         public var description: String { rawValue }
     }
     
     /// Address fields modification mode
-    public enum AddressMode: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum AddressMode: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case READONLY
         case READWRITE
         public var description: String { rawValue }
     }
     
     /// Person gender
-    public enum Gender: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable {
+    public enum Gender: String, Codable, CustomStringConvertible, CaseIterable, Equatable, Hashable, Sendable {
         case MALE
         case FEMALE
         public var description: String { rawValue }
@@ -369,7 +481,7 @@ public struct ETP: WSDLService {
         public var iban: String
         public var bic: String?
         public var mandateID: String?
-        public var dateOfSignature: Date?
+        public var dateOfSignature: String?
 
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
@@ -390,7 +502,7 @@ public struct ETP: WSDLService {
             iban: String,
             bic: String? = nil,
             mandateID: String? = nil,
-            dateOfSignature: Date? = nil
+            dateOfSignature: String? = nil
         )  {
             self.validate = validate
             self.profileID = profileID
@@ -763,7 +875,7 @@ public struct ETP: WSDLService {
         public var iban: String
         public var bic: String?
         public var mandateID: String?
-        public var dateOfSignature: Date?
+        public var dateOfSignature: String?
 
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
@@ -788,7 +900,7 @@ public struct ETP: WSDLService {
             iban: String,
             bic: String? = nil,
             mandateID: String? = nil,
-            dateOfSignature: Date? = nil
+            dateOfSignature: String? = nil
         )  {
             self.amount = amount
             self.currency = currency
@@ -1093,7 +1205,7 @@ public struct ETP: WSDLService {
         // own properties
         public var brand: String
         public var mandateID: String?
-        public var dateOfSignature: Date?
+        public var dateOfSignature: String?
 
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
@@ -1116,7 +1228,7 @@ public struct ETP: WSDLService {
             profileID: String? = nil,
             brand: String,
             mandateID: String? = nil,
-            dateOfSignature: Date? = nil
+            dateOfSignature: String? = nil
         )  {
             self.amount = amount
             self.currency = currency
@@ -1280,7 +1392,7 @@ public struct ETP: WSDLService {
         public var profileID: String?
         // own properties
         public var mandateID: String?
-        public var dateOfSignature: Date?
+        public var dateOfSignature: String?
 
         enum CodingKeys: String, CodingKey {
             case xsiType = "xsi:type"
@@ -1302,7 +1414,7 @@ public struct ETP: WSDLService {
             useProfile: Bool? = nil,
             profileID: String? = nil,
             mandateID: String? = nil,
-            dateOfSignature: Date? = nil
+            dateOfSignature: String? = nil
         )  {
             self.amount = amount
             self.currency = currency
@@ -1567,7 +1679,7 @@ public struct ETP: WSDLService {
         public var mode: AddressMode?
         public var name: String
         public var gender: Gender?
-        public var birthday: Date?
+        public var birthday: String?
         public var street: String?
         public var street2: String?
         public var zip: String?
@@ -1581,7 +1693,7 @@ public struct ETP: WSDLService {
             mode: AddressMode? = nil,
             name: String,
             gender: Gender? = nil,
-            birthday: Date? = nil,
+            birthday: String? = nil,
             street: String? = nil,
             street2: String? = nil,
             zip: String? = nil,
@@ -1925,7 +2037,7 @@ public struct ETP: WSDLService {
         public var profileID: String
         public var updated: Date
         public var identifier: String
-        public var expires: Date?
+        public var expires: String?
         public var address: Address?
 
         public init(
@@ -1933,7 +2045,7 @@ public struct ETP: WSDLService {
             profileID: String,
             updated: Date,
             identifier: String,
-            expires: Date? = nil,
+            expires: String? = nil,
             address: Address? = nil
         )  {
             self.pMethodID = pMethodID
@@ -2839,14 +2951,14 @@ public struct ETP: WSDLService {
     public struct ListProfiles: Codable {
         public var merchantID: UInt32
         public var customerID: String?
-        public var expiredBy: Date?
+        public var expiredBy: String?
         public var begin: UInt32?
         public var size: UInt32?
 
         public init(
             merchantID: UInt32,
             customerID: String? = nil,
-            expiredBy: Date? = nil,
+            expiredBy: String? = nil,
             begin: UInt32? = nil,
             size: UInt32? = nil
         )  {

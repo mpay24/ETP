@@ -12,18 +12,18 @@ import Testing
 @testable import ETP
 
 struct SerializeTests {
-    
+
     let encoder = XMLEncoder()
     let decoder = XMLDecoder()
-    
+
     init () async throws {
         encoder.dateEncodingStrategy = .iso8601
         decoder.dateDecodingStrategy = .iso8601
         decoder.shouldProcessNamespaces = true
     }
-    
+
     func encode<Request: Codable>(_ request: Request) -> String? {
-        let requestEnvelope = SOAPEnvelope<Request>(body: request)
+        let requestEnvelope = ETP.SOAPEnvelope<Request>(body: request)
         if let res = try? encoder.encode(requestEnvelope, withRootKey: "soap:Envelope", rootAttributes: [
             "xmlns:soap": "http://schemas.xmlsoap.org/soap/envelope/",
             "xmlns:etp": "etp",
@@ -34,14 +34,28 @@ struct SerializeTests {
         }
         return nil
     }
-    
+
     func decode<Response: Codable>(_ xml: String) -> Response? {
         if let data = xml.data(using: .utf8) {
-            return try? decoder.decode(SOAPEnvelope<Response>.self, from: data).body
+            return try? decoder.decode(ETP.SOAPEnvelope<Response>.self, from: data).body
         }
         return nil
     }
+
+    @Test func testPaymentELV() async throws {
+        let req = ETP.PaymentELV(amount: 100, currency: "EUR", brand: "ELV", iban: "DE60265800708732502200", dateOfSignature: "2026-05-02")
+        if let xml = encode(req) {
+            print("req: \(xml)")
+        }
+    }
     
+    @Test func testProfile() async throws {
+        let req = ETP.Profile(customerID: "1230", updated: Date.now)
+        if let xml = encode(req) {
+            print("req: \(xml)")
+        }
+    }
+
     @Test func testAcceptPaymentResponse() async throws {
         let xml = """
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -62,7 +76,7 @@ struct SerializeTests {
         #expect(res?.returnCode == "OK")
         #expect(res?.mpayTID == 247227)
     }
-    
+
     @Test func testManualCreditResponse() async throws {
         let xml = """
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -80,7 +94,7 @@ struct SerializeTests {
     </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
 """
-        
+
         let res: ETP.ManualCreditResponse? = decode(xml)
         #expect(res != nil, "Failed to decode")
         #expect(res?.status == .ERROR)

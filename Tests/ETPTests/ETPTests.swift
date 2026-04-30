@@ -31,7 +31,7 @@ final class ETPTests: XCTestCase {
             XCTAssertEqual(response.status, .OK, "Expected status to be .OK")
             XCTAssertEqual(response.returnCode, "OK", "Expected return code to be 'OK'")
             XCTAssertNotNil(response.mpayTID, "Expected mpayTID to be non-nil")
-        } catch WSDLOperationError.unauhtenticated {
+        } catch ETP.WSDLOperationError.unauhtenticated {
             if merchantID != 90000 {
                 XCTFail("Expecting authenticated merchant: \(merchantID)")
             }
