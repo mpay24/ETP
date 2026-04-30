@@ -89,7 +89,7 @@ public struct ETP {
         case soapFault(Fault)
     }
 
-    func operation<Request: Codable, Response: Codable>(_ request: Request) async throws -> Response {
+    public func operation<Request: Codable, Response: Codable>(_ request: Request) async throws -> Response {
         guard let url = URL(string: endpoint) else { throw WSDLOperationError.invalidEndpoint}
         let encoder = XMLEncoder()
         encoder.dateEncodingStrategy = .iso8601
